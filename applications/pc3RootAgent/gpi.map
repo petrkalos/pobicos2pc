@@ -1,0 +1,9 @@
+pongiPoCreateGenericAgent = 0x10002;
+pongiPoDbgString = 0x10024;
+pongiPoGetChildInfoOld = 0x10008;
+pongiPoGetMyID = 0x10020;
+pongiPoGetReport = 0x10010;
+pongiPoGetTimerID = 0x10014;
+pongiPoRelease = 0x10006;
+pongiPoSendCommand = 0x1000a;
+pongiPoSetTimer = 0x10012;

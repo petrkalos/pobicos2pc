@@ -1,0 +1,205 @@
+GAS LISTING /tmp/ccCFqnfy.s 			page 1
+
+
+   1               		.file	"pc6RootAgent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.global __do_copy_data
+   8               		.global __do_clear_bss
+   9               		.data
+  10               	.LC0:
+  11 0000 726F 6F74 		.string	"root: report arrived\n"
+  11      3A20 7265 
+  11      706F 7274 
+  11      2061 7272 
+  11      6976 6564 
+  12               		.section	.events.PoReportArrivedEvent,"ax",@progbits
+  13               	.global	EVENT_PoReportArrivedEvent
+  15               	EVENT_PoReportArrivedEvent:
+  16               	/* prologue: frame size=40 */
+  17 0000 CF93      		push r28
+  18 0002 DF93      		push r29
+  19 0004 CDB7      		in r28,__SP_L__
+  20 0006 DEB7      		in r29,__SP_H__
+  21 0008 A897      		sbiw r28,40
+  22 000a DEBF      		out __SP_H__,r29
+  23 000c CDBF      		out __SP_L__,r28
+  24               	/* prologue end (size=7) */
+  25 000e AE01      		movw r20,r28
+  26 0010 475F      		subi r20,lo8(-(9))
+  27 0012 5F4F      		sbci r21,hi8(-(9))
+  28 0014 BE01      		movw r22,r28
+  29 0016 6B5F      		subi r22,lo8(-(5))
+  30 0018 7F4F      		sbci r23,hi8(-(5))
+  31 001a CE01      		movw r24,r28
+  32 001c 0196      		adiw r24,1
+  33 001e 0E94 0000 		call pongiPoGetChildInfoOld
+  34 0022 80E0      		ldi r24,lo8(.LC0)
+  35 0024 90E0      		ldi r25,hi8(.LC0)
+  36 0026 0E94 0000 		call pongiPoDbgString
+  37 002a CE01      		movw r24,r28
+  38 002c 0D96      		adiw r24,13
+  39 002e 0E94 0000 		call pongiPoGetReport
+  40 0032 CE01      		movw r24,r28
+  41 0034 0E96      		adiw r24,14
+  42 0036 0E94 0000 		call pongiPoDbgString
+  43 003a 0E94 0000 		call pongiPoGetMyID
+  44 003e 0E94 0000 		call pongiPoRelease
+  45               	/* epilogue: frame size=40 */
+  46 0042 A896      		adiw r28,40
+  47 0044 DEBF      		out __SP_H__,r29
+  48 0046 CDBF      		out __SP_L__,r28
+  49 0048 DF91      		pop r29
+  50 004a CF91      		pop r28
+  51 004c 0895      		ret
+  52               	/* epilogue end (size=6) */
+  53               	/* function EVENT_PoReportArrivedEvent size 39 (26) */
+  55               		.data
+GAS LISTING /tmp/ccCFqnfy.s 			page 2
+
+
+  56               	.LC1:
+  57 0016 726F 6F74 		.string	"root: child created\n"
+  57      3A20 6368 
+  57      696C 6420 
+  57      6372 6561 
+  57      7465 640A 
+  58               	.LC2:
+  59 002b 726F 6F74 		.string	"root: send command\n"
+  59      3A20 7365 
+  59      6E64 2063 
+  59      6F6D 6D61 
+  59      6E64 0A00 
+  60               	.LC3:
+  61 003f 7069 6E67 		.string	"ping"
+  61      00
+  62               		.section	.events.PoChildCreatedEvent,"ax",@progbits
+  63               	.global	EVENT_PoChildCreatedEvent
+  65               	EVENT_PoChildCreatedEvent:
+  66               	/* prologue: frame size=28 */
+  67 0000 0F93      		push r16
+  68 0002 1F93      		push r17
+  69 0004 CF93      		push r28
+  70 0006 DF93      		push r29
+  71 0008 CDB7      		in r28,__SP_L__
+  72 000a DEB7      		in r29,__SP_H__
+  73 000c 6C97      		sbiw r28,28
+  74 000e DEBF      		out __SP_H__,r29
+  75 0010 CDBF      		out __SP_L__,r28
+  76               	/* prologue end (size=9) */
+  77 0012 80E0      		ldi r24,lo8(.LC1)
+  78 0014 90E0      		ldi r25,hi8(.LC1)
+  79 0016 0E94 0000 		call pongiPoDbgString
+  80 001a 40E0      		ldi r20,lo8(h)
+  81 001c 50E0      		ldi r21,hi8(h)
+  82 001e 60E0      		ldi r22,lo8(ctype)
+  83 0020 70E0      		ldi r23,hi8(ctype)
+  84 0022 80E0      		ldi r24,lo8(cid)
+  85 0024 90E0      		ldi r25,hi8(cid)
+  86 0026 0E94 0000 		call pongiPoGetChildInfoOld
+  87 002a 80E0      		ldi r24,lo8(.LC2)
+  88 002c 90E0      		ldi r25,hi8(.LC2)
+  89 002e 0E94 0000 		call pongiPoDbgString
+  90 0032 8E01      		movw r16,r28
+  91 0034 0E5F      		subi r16,lo8(-(2))
+  92 0036 1F4F      		sbci r17,hi8(-(2))
+  93 0038 60E0      		ldi r22,lo8(.LC3)
+  94 003a 70E0      		ldi r23,hi8(.LC3)
+  95 003c C801      		movw r24,r16
+  96 003e 0E94 0000 		call strcpy
+  97 0042 F801      		movw r30,r16
+  98 0044 0190      		ld __tmp_reg__,Z+
+  99 0046 0020      		tst __tmp_reg__
+ 100 0048 01F4      		brne .-6
+ 101 004a E01B      		sub r30,r16
+ 102 004c E983      		std Y+1,r30
+ 103 004e 6091 0000 		lds r22,cid
+ 104 0052 7091 0000 		lds r23,(cid)+1
+GAS LISTING /tmp/ccCFqnfy.s 			page 3
+
+
+ 105 0056 8091 0000 		lds r24,(cid)+2
+ 106 005a 9091 0000 		lds r25,(cid)+3
+ 107 005e 20E0      		ldi r18,lo8(0)
+ 108 0060 AE01      		movw r20,r28
+ 109 0062 4F5F      		subi r20,lo8(-(1))
+ 110 0064 5F4F      		sbci r21,hi8(-(1))
+ 111 0066 0E94 0000 		call pongiPoSendCommand
+ 112               	/* epilogue: frame size=28 */
+ 113 006a 6C96      		adiw r28,28
+ 114 006c DEBF      		out __SP_H__,r29
+ 115 006e CDBF      		out __SP_L__,r28
+ 116 0070 DF91      		pop r29
+ 117 0072 CF91      		pop r28
+ 118 0074 1F91      		pop r17
+ 119 0076 0F91      		pop r16
+ 120 0078 0895      		ret
+ 121               	/* epilogue end (size=8) */
+ 122               	/* function EVENT_PoChildCreatedEvent size 61 (44) */
+ 124               		.data
+ 125               	.LC4:
+ 126 0044 726F 6F74 		.string	"root: init\n"
+ 126      3A20 696E 
+ 126      6974 0A00 
+ 127               		.section	.events.PoInitEvent,"ax",@progbits
+ 128               	.global	EVENT_PoInitEvent
+ 130               	EVENT_PoInitEvent:
+ 131               	/* prologue: frame size=0 */
+ 132 0000 0F93      		push r16
+ 133 0002 1F93      		push r17
+ 134               	/* prologue end (size=2) */
+ 135 0004 80E0      		ldi r24,lo8(.LC4)
+ 136 0006 90E0      		ldi r25,hi8(.LC4)
+ 137 0008 0E94 0000 		call pongiPoDbgString
+ 138 000c 00E0      		ldi r16,lo8(0)
+ 139 000e 10E0      		ldi r17,hi8(0)
+ 140 0010 20E0      		ldi r18,hlo8(0)
+ 141 0012 30E0      		ldi r19,hhi8(0)
+ 142 0014 42E0      		ldi r20,lo8(2)
+ 143 0016 50E0      		ldi r21,hi8(2)
+ 144 0018 62E6      		ldi r22,lo8(52322)
+ 145 001a 7CEC      		ldi r23,hi8(52322)
+ 146 001c 80E0      		ldi r24,hlo8(52322)
+ 147 001e 90E0      		ldi r25,hhi8(52322)
+ 148 0020 0E94 0000 		call pongiPoCreateGenericAgent
+ 149               	/* epilogue: frame size=0 */
+ 150 0024 1F91      		pop r17
+ 151 0026 0F91      		pop r16
+ 152 0028 0895      		ret
+ 153               	/* epilogue end (size=3) */
+ 154               	/* function EVENT_PoInitEvent size 21 (16) */
+ 156               		.comm cid,4,1
+ 157               		.comm ctype,4,1
+ 158               		.comm h,4,1
+ 159               	/* File "pc6RootAgent.c": code  121 = 0x0079 (  86), prologues  18, epilogues  17 */
+GAS LISTING /tmp/ccCFqnfy.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pc6RootAgent.c
+     /tmp/ccCFqnfy.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccCFqnfy.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccCFqnfy.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccCFqnfy.s:5      *ABS*:00000000 __tmp_reg__
+     /tmp/ccCFqnfy.s:6      *ABS*:00000001 __zero_reg__
+     /tmp/ccCFqnfy.s:15     .events.PoReportArrivedEvent:00000000 EVENT_PoReportArrivedEvent
+     /tmp/ccCFqnfy.s:65     .events.PoChildCreatedEvent:00000000 EVENT_PoChildCreatedEvent
+                            *COM*:00000004 h
+                            *COM*:00000004 ctype
+                            *COM*:00000004 cid
+     /tmp/ccCFqnfy.s:130    .events.PoInitEvent:00000000 EVENT_PoInitEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+pongiPoGetChildInfoOld
+pongiPoDbgString
+pongiPoGetReport
+pongiPoGetMyID
+pongiPoRelease
+strcpy
+pongiPoSendCommand
+pongiPoCreateGenericAgent

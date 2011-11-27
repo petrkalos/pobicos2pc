@@ -1,0 +1,855 @@
+run:
+PoCommMgrWriteTask app_lat = 39.0
+PoCommMgrWriteTask app_lon = 22.0
+PoCommMgrWriteTask app_radiuskm = d
+PoMainA onCreate()
+/192.168.178.29 is reachable
+ is running false
+Starting the middleware...
+PoMiddlewareService onCreate() 
+Try to connect...
+PoConnectionManager Socket is connected.
+PoCommMgrWriteTask app_lat = 39.0
+PoCommMgrWriteTask app_lon = 22.0
+PoCommMgrWriteTask app_radiuskm = d
+PoCommMgrWriteTask Thread started!
+PoCommMgrReadTaskThread started!
+PoCommMgrReadTaskRead()'ing
+PoCommMgrWriteTaskpaylen(byte) == 23
+PoCommMgrWriteTasksending packet: 02170140438000000000004036000000000000000000000000
+PoCommMgrWriteTaskWrote() 25bytes.
+PoCommMgrReadTaskread() Header: 2 bytes. Length of payload = 6
+PoCommMgrReadTaskGOT REG_REPLY_WELCOME! addr:00039251976c
+PoCommMgrReadTaskaddr: 0003
+PoCommMgrReadTaskseed: 9251976c
+PoRegistryServicemyAddr is set to: 3 and seed to -1840146580
+CONNSTATUSBRInside BR
+CONNSTATUSBRGOT registry event
+PoConnectionManagerStarting update thread.
+CONNSTATUSBRBROADCAST RECEIVER ONCREATE() RETURNING...(REGISTRY_EVENT)
+PoCommMgrReadTaskRead()'ing
+PoAPIClassloader of POAPI is the same with evt handler thread
+RegistryUpdateTaskUpdate thread started
+Connected.
+PoMainA MAINACTIVITY oncreate RETURNING
+PoMainA onStart() called.
+/192.168.178.29 is reachable
+PoMainA MAINACTIVITY onstart RETURNING 
+PoEventHandlerThreadEvent Handler Thread started!
+PoEventHandlerThreadMiddlewareManager class loaded successfuly.
+MiddlewareManagerMiddlewareManager started
+MiddlewareManagerServices loaded successfuly.
+NetworkServiceStarted!
+TimerServiceStarted!
+UARTServiceStarted!
+NGResourcesStarted!
+MiddlewareManagernet ok
+MiddlewareManagertimer ok
+MiddlewareManageruart ok
+MiddlewareManagerng ok
+MiddlewareManager Library is loaded.
+PoEventHandlerThreadClassloader of evt handler thread is the same with MiddlewareManager
+MiddlewareManager nativeInit() returned: 0
+MiddlewareManager DEBUG: PoRuntimeSWTimersM
+
+MiddlewareManager DEBUG: PoMemMngrM init
+
+MiddlewareManager DEBUG: PoHWUARTM: initialized.
+
+MiddlewareManager DEBUG: PoRAMMemM init
+
+MiddlewareManager DEBUG: PoRAMMemM init
+
+MiddlewareManager DEBUG: PoRAMMemM init
+
+MiddlewareManager DEBUG: PoRAMMemM init
+
+MiddlewareManager DEBUG: Loading concepts
+
+MiddlewareManager DEBUG: PoSystemTimeM
+
+MiddlewareManager DEBUG: PoSysInspM
+
+MiddlewareManager DEBUG: PoAppPillM init
+
+MiddlewareManager DEBUG: VMCPUM init
+
+MiddlewareManager DEBUG: PoGenPrimM init
+
+MiddlewareManager DEBUG: PoSecurityM
+
+MiddlewareManager DEBUG: PoCommM
+
+MiddlewareManager DEBUG: PoHWCommM
+
+MiddlewareManager DEBUG: PoNetworkMngrM
+
+MiddlewareManager DEBUG: PoDataItemM init
+
+MiddlewareManager DEBUG: PoHWResourcesM: Initializing...
+
+MiddlewareManager DEBUG: VMCPUM: starting
+
+MiddlewareManager DEBUG: RuntimeMngrM: start done
+
+MiddlewareManager DEBUG: PoHWUARTM N#00: started
+
+MiddlewareManager DEBUG: PoHWResourcesM: Starting...
+
+MiddlewareManager nativeMain() returned: 0
+MiddlewareManager DEBUG: PoNetworkMngrM: attempting to join network
+
+NetworkServiceReturning local myAddr: 3
+MiddlewareManager DEBUG: LEKKAS: Got address: 3
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE
+
+
+MiddlewareManager DEBUG: PoBroadcastM: sendMsg: addr = 0x0000fffd len = 1 type = HW_BROADCAST, if = 52
+
+
+MiddlewareManager DEBUG: PoCommM: sendMsg: addr = 0x0000ffff, len = 1 type = BE, if = 52
+
+MiddlewareManager DEBUG: PoCommVirtualFilterM: tx addr change: source = 0x0003, dest = 0xffff
+
+NetworkServiceSendPacket CB: payload.length = 7
+NetworkServiceSendPacket CB: len = 7
+NetworkServiceSrc: 0003
+NetworkServiceDst: ffff
+MiddlewareManager DEBUG: PoCommM: message sent
+
+
+MiddlewareManager DEBUG: PoCommM: my address = 0x00000003
+
+MiddlewareManager DEBUG: PoSystemTimeM: join@ 0, myAd=03
+Start application...
+
+MiddlewareManager DEBUG: PoSysInspM: JOINED (0003)
+
+MiddlewareManager DEBUG: joined:3
+
+MiddlewareManager DEBUG: DBG_PO_AMGR: INFO: PoUAMnrgM.nc: createNodeDesc() line 3692: creating new node descriptor with addr:0x3
+
+PoCommMgrWriteTaskpaylen(byte) == 30
+PoCommMgrWriteTasksending packet: 011e0003ffff070334000003ffff000000000000000000000000000000000000
+PoCommMgrWriteTaskWrote() 32bytes.
+PoAppPillLoaderApplication bundle size: 297
+MiddlewareManager DEBUG: after join ToNetwork joinAddr 3 !
+
+MiddlewareManager DEBUG: 
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x01] len [1]
+
+MiddlewareManager DEBUG: PoAppPillM init
+
+PoAppPillLoaderSending: 290100000200d3000000390000000400000021cc000011d3000301
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: starting loading of new uA image
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: type [0x0000cc21] and len [211] read
+
+MiddlewareManager DEBUG: PoDataItemI: Putting entry locally: itemTypeID [0x01], itemID [0x0000cc21], len [211] - 
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 5 image left: 207 image offset: 0x00000004) 
+
+PoAppPillLoaderSending: 0000052a0003340082000f931f938de790e00e94128000e010e020
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 202 image offset: 0x00000009) 
+
+PoAppPillLoaderSending: e030e048e853e162e27cec80e090e00e9401801f910f9108950e94
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 175 image offset: 0x00000024) 
+
+PoAppPillLoaderSending: 10800e9403800895cf93df93cdb7deb72c97debfcdbfae01475f5f
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 148 image offset: 0x0000003f) 
+
+PoAppPillLoaderSending: 4fbe016b5f7f4fce0101960e94048080e690e00e94128069817a81
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 121 image offset: 0x0000005a) 
+
+PoAppPillLoaderSending: 8b819c810e9413806d817e818f8198850e9413802c96debfcdbfdf
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 94 image offset: 0x00000075) 
+
+PoAppPillLoaderSending: 91cf9108953a000000504554524f533a20726f6f743a206368696c
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 67 image offset: 0x00000090) 
+
+PoAppPillLoaderSending: 6420637265617465640a00504554524f533a20726f6f743a204372
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 40 image offset: 0x000000ab) 
+
+PoAppPillLoaderSending: 65617465206368696c640a000022cc000011390001010000120080
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: last chunk (payload left: 27 image left: 13 image offset: 0x000000c6) 
+
+MiddlewareManager DEBUG: PoSysInspM: --rootAgentInfoReceived (rootAtype=CC21)
+
+MiddlewareManager DEBUG: PoAppPillM: starting loading of new uA image
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: type [0x0000cc22] and len [57] read
+
+MiddlewareManager DEBUG: PoDataItemI: Putting entry locally: itemTypeID [0x01], itemID [0x0000cc22], len [57] - 
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 10 image left: 53 image offset: 0x00000004) 
+
+PoAppPillLoaderSending: e690e00e9412800e9410800e940380089516000000504554524f53
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: image chunk (payload left: 27 image left: 43 image offset: 0x0000000e) 
+
+PoAppPillLoaderSending: 3a206368696c643a2048656c6c6f0a000000000070633241707000
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x02] len [27]
+
+MiddlewareManager DEBUG: PoAppPillM: parsing payload of the received message
+
+MiddlewareManager DEBUG: PoAppPillM: byte-by-byte image loading...
+
+MiddlewareManager DEBUG: PoAppPillM: last chunk (payload left: 27 image left: 16 image offset: 0x00000029) 
+
+MiddlewareManager DEBUG: PoAppPillM: fits from one payload
+
+MiddlewareManager DEBUG: PoAppPillM: Number of settings: 0
+
+MiddlewareManager DEBUG: PoSysInspM: -numberOfSettingsReceived = 0 (0)
+
+MiddlewareManager DEBUG: PoAppPillM: application name [pc2App] read
+
+MiddlewareManager DEBUG: PoSysInspM: -appNameReceived: 'pc2App'
+
+MiddlewareManager DEBUG: PoAppPillM: Upload finished! bundle len: 297 agents num: 2 settings len: 4 settings num: 0
+
+PoAppPillLoader
+Done!
+MiddlewareManager DEBUG: PoAppPillM: UART message received on channel [0x01] len [1]
+
+MiddlewareManager DEBUG: __TIMER__START__
+MiddlewareManager DEBUG: INFO: PoUAMngrM: createRootVirtAgent with type cc21 and appId 3007f,rootId30080, localAddr:3 
+
+MiddlewareManager DEBUG: RuntimeMngrM: Creating UA runtime for: type: 0x0000cc21 ID: 0x00030080
+
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc21
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 3
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 130
+code offs: 0013
+data len: 58
+bss_len: 0
+data_offs: 0099
+
+MiddlewareManager DEBUG: RuntimeMngrM: Runtime created for: type: 0x0000cc21 ID: 0x00030080 num: 0
+
+MiddlewareManager DEBUG: IN IF LINE:7574.ADDED child for agent:0x3007f, head:0, ptrChild:0, child:0x30080, child.host:3
+
+MiddlewareManager DEBUG: LINE:7594.ADDED child for agent:0x3007f, head:0, ptrChild:0, child:0x30080, child.host:3
+
+MiddlewareManager DEBUG: create root structure:0x30080
+
+MiddlewareManager DEBUG: signal init event to agent with id 0x30080, specialFlag:2, lifeT:0
+
+MiddlewareManager DEBUG: signal init event to agent with id 0x30080, specialFlag:2, lifeT:0
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000001] for agent ID [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000001]) - event enabled
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030080] event type: [0x00000001]
+
+MiddlewareManager DEBUG: PoUAMngrM: root agent created l:4376
+
+MiddlewareManager DEBUG: PoSysInspM: ROOT CREATED (appId=0x0003007F aid(rid)=0x00030080 t=0x0000CC21)
+
+MiddlewareManager DEBUG: PoSysInspM: root atype and id associated. appIndexes = 1(d) 
+
+MiddlewareManager DEBUG: PoSysInspM: sendMWAdminForceMsg to FFFD. ty=0xE2 tx.len=6 (<=sizeof(I_MWAdminMsg)=103)
+
+MiddlewareManager DEBUG: PoBroadcastM: sendMsg: addr = 0x0000fffd len = 6 type = HW_BROADCAST, if = 53
+
+
+MiddlewareManager DEBUG: PoCommM: sendMsg: addr = 0x0000ffff, len = 6 type = BE, if = 53
+
+MiddlewareManager DEBUG: PoCommVirtualFilterM: tx addr change: source = 0x0003, dest = 0xffff
+
+NetworkServiceSendPacket CB: payload.length = 12
+NetworkServiceSendPacket CB: len = 12
+NetworkServiceSrc: 0003
+NetworkServiceDst: ffff
+PoCommMgrWriteTaskpaylen(byte) == 35
+PoCommMgrWriteTasksending packet: 01230003ffff0c033506e2800003000003ffff000000000000000000000000000000000000
+PoCommMgrWriteTaskWrote() 37bytes.
+MiddlewareManager DEBUG: PoCommM: message sent
+
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000001]) - event enabled
+
+MiddlewareManager DEBUG: RuntimeMngrM Context change signalled [0x00030080]
+
+MiddlewareManager DEBUG: LEKKAS: codeLength = 130
+MiddlewareManager DEBUG: LEKKAS: dataLength = 130
+MiddlewareManager DEBUG: RuntimeMngrM Context changed [0x00030080]
+
+MiddlewareManager DEBUG: EventDispatcherM: starting agent [0x00030080] event handler @ addr [0x0000] of event [0x00000001]
+
+MiddlewareManager DEBUG: VMCPUM: execution started
+
+MiddlewareManager DEBUG: ********** opcode: 0x0002 LDI R24, 0x7d
+
+MiddlewareManager DEBUG: ********** opcode: 0x0003 LDI R25, 0x00
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000012] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 12 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: APP: agent 0x00030080: PETROS: root: Create child
+
+
+MiddlewareManager DEBUG: ********** opcode: 0x0006 LDI R16, 0x00
+
+MiddlewareManager DEBUG: ********** opcode: 0x0007 LDI R17, 0x00
+
+MiddlewareManager DEBUG: ********** opcode: 0x0008 LDI R18, 0x00
+
+MiddlewareManager DEBUG: ********** opcode: 0x0009 LDI R19, 0x00
+
+MiddlewareManager DEBUG: ********** opcode: 0x000a LDI R20, 0x88
+
+MiddlewareManager DEBUG: ********** opcode: 0x000b LDI R21, 0x13
+
+MiddlewareManager DEBUG: ********** opcode: 0x000c LDI R22, 0x22
+
+MiddlewareManager DEBUG: ********** opcode: 0x000d LDI R23, 0xcc
+
+MiddlewareManager DEBUG: ********** opcode: 0x000e LDI R24, 0x00
+
+MiddlewareManager DEBUG: ********** opcode: 0x000f LDI R25, 0x00
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000001] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 01 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: PoUAMngrM:   createGenericAgent  
+
+MiddlewareManager DEBUG: VMCPUM: execution ended
+
+MiddlewareManager DEBUG: VMCPUM: 19 opcodes(s) interpreted
+
+MiddlewareManager DEBUG: EventDispatcherM: run done: OK
+
+MiddlewareManager DEBUG: PlacementTimer fired!
+
+MiddlewareManager DEBUG: INFO: HANDLECREQS state:0,PtrCcr:-1
+
+MiddlewareManager DEBUG: INFO: creq.aid:0x30080,creq.type:0xcc22,creq.lifeT:5000230,clockTime:231
+
+MiddlewareManager DEBUG: INFO: requesting data item creq.aid:0x30080,creq.type:0xcc22
+
+MiddlewareManager DEBUG: PoDataItemM: data item (itemTypeID [0x01], itemID [0x0000cc22]) requested
+
+MiddlewareManager DEBUG: PoDataItemM: requested data item exists in repository
+
+MiddlewareManager DEBUG: PoDataItemM: Scheduling data item notification: itemTypeID [0x01] itemID [0x0000cc22] itemReady [SUCCESS]
+
+MiddlewareManager DEBUG: PoDataItemM: Processing notification task.
+
+MiddlewareManager DEBUG: PoDataItemM: Notifying client - data item (itemTypeID [0x01], itemID [0x0000cc22]) - READY
+
+MiddlewareManager DEBUG: INFO: data item ready: itemTypeID:1, itemID:0xcc22!
+
+PoAppPillLoader
+Application root agent started!(L==5)
+MiddlewareManager DEBUG: EVNT: data item ready!
+
+MiddlewareManager DEBUG: PlacementTimer fired!
+
+MiddlewareManager DEBUG: INFO: HANDLECREQS state:1,PtrCcr:0
+
+MiddlewareManager DEBUG: PoSysInspM: PRIO: PoConfigSetupI.getPriority:
+
+MiddlewareManager DEBUG: PoSysInspM: PRIO: get prio OK [appId=0x0003007F prio=3]
+
+MiddlewareManager DEBUG: line 4955: handleCreqs checking if agent can be created locally
+
+MiddlewareManager DEBUG: RuntimeMngrM: Retrieving number of free UA runtimes: 7
+
+MiddlewareManager DEBUG: Node 3 meets succesfully generic reqs
+
+MiddlewareManager DEBUG: line 4959: INFO: checking config settings for generic agent to be created locally
+
+MiddlewareManager DEBUG: PoSysInspM mwad: checkSettingSubset. atype=0xCC22, appId=0x3007F, pillAddr=0x03
+
+MiddlewareManager DEBUG: PoSysInspM mwad: subsetIsAvailableLocally(): Occupied slot found (0), appId(0003007F) match. nofSets=0
+
+MiddlewareManager DEBUG: PoSysInspM mwad: subset available locally (Or I'm rootNode and no settings for this atype)
+
+MiddlewareManager DEBUG: line 5571: INFO: settingSubsetChecked fired!, appID:0x3007f, atype:0xcc22, result:SUCCESS
+
+MiddlewareManager DEBUG: PlacementTimer fired!
+
+MiddlewareManager DEBUG: INFO: HANDLECREQS state:5,PtrCcr:0
+
+MiddlewareManager DEBUG: PoUAMngrM: internal function createAgent
+
+MiddlewareManager DEBUG: RuntimeMngrM: Creating UA runtime for: type: 0x0000cc22 ID: 0x00030081
+
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc22
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 1
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 18
+code offs: 000d
+data len: 22
+bss_len: 0
+data_offs: 0023
+
+MiddlewareManager DEBUG: RuntimeMngrM: Runtime created for: type: 0x0000cc22 ID: 0x00030081 num: 1
+
+MiddlewareManager DEBUG: signal init event to agent with id 0x30081, specialFlag:3, lifeT:180233
+
+MiddlewareManager DEBUG: signal init event to agent with id 0x30081, specialFlag:3, lifeT:180233
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000001] for agent ID [0x00030081]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030081] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030081], et [0x00000001]) - event enabled
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030081] event type: [0x00000001]
+
+MiddlewareManager DEBUG: LEDS: Led0 on.
+
+MiddlewareManager DEBUG: LEDS: Led1 on.
+
+MiddlewareManager DEBUG: LEDS: Led2 on.
+
+MiddlewareManager DEBUG: LEDS: Led1 on.
+
+MiddlewareManager DEBUG: LEDS: Led2 on.
+
+MiddlewareManager DEBUG: PoSysInspM: AGENT CREATED (appId=0x0003007F pid=0x00030080 aid=0x00030081 t=0x0000CC22)
+
+MiddlewareManager DEBUG: Agent of type 0xcc22 and id:0x30081 was created on 3
+
+MiddlewareManager DEBUG: DBG_PO_AMGR: INFO: Agent of type 0xcc22 and id:0x30081 was created on 3
+
+MiddlewareManager DEBUG: __TIMER__STOP__
+MiddlewareManager DEBUG: IN IF LINE:7574.ADDED child for agent:0x30080, head:1, ptrChild:1, child:0x30081, child.host:3
+
+MiddlewareManager DEBUG: LINE:7594.ADDED child for agent:0x30080, head:1, ptrChild:1, child:0x30081, child.host:3
+
+MiddlewareManager DEBUG: Agent cid:0x30081, type:0xcc22, was created on n:0x3
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000003] for agent ID [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc21
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 3
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 130
+code offs: 0013
+data len: 58
+bss_len: 0
+data_offs: 0099
+
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000003]) - event enabled
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030080] event type: [0x00000003]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030081] mask:
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc22
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 1
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 18
+code offs: 000d
+data len: 22
+bss_len: 0
+data_offs: 0023
+
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030081], et [0x00000001]) - event enabled
+
+MiddlewareManager DEBUG: RuntimeMngrM Context change signalled [0x00030081]
+
+MiddlewareManager DEBUG: RuntimeMngrM: saveContext dataAddr = 0000000d, dataLenght = 0000003a
+
+MiddlewareManager DEBUG: LEKKAS: codeLength = 18
+MiddlewareManager DEBUG: LEKKAS: dataLength = 18
+MiddlewareManager DEBUG: RuntimeMngrM Context changed [0x00030081]
+
+MiddlewareManager DEBUG: EventDispatcherM: starting agent [0x00030081] event handler @ addr [0x0000] of event [0x00000001]
+
+MiddlewareManager DEBUG: VMCPUM: execution started
+
+MiddlewareManager DEBUG: ********** opcode: 0x0000 LDI R24, 0x60
+
+MiddlewareManager DEBUG: ********** opcode: 0x0001 LDI R25, 0x00
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000012] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 12 called by agentID [0x00030081]
+
+MiddlewareManager DEBUG: APP: agent 0x00030081: PETROS: child: Hello
+
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000010] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 10 called by agentID [0x00030081]
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000003] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 03 called by agentID [0x00030081]
+
+MiddlewareManager DEBUG: PoUAMngrM: release 30081 child from  30081 
+
+MiddlewareManager DEBUG: l:3249,release agent:30081
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000002] for agent ID [0x00030081]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030081] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030081], et [0x00000002]) - no such event handler!
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030081] event type: [0x00000002]
+
+MiddlewareManager DEBUG: VMCPUM: execution ended
+
+MiddlewareManager DEBUG: VMCPUM: 6 opcodes(s) interpreted
+
+MiddlewareManager DEBUG: EventDispatcherM: run done: OK
+
+MiddlewareManager DEBUG: EventDispatcherM: Still 2 execution requests waiting. Posting execution task...
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc21
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 3
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 130
+code offs: 0013
+data len: 58
+bss_len: 0
+data_offs: 0099
+
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000003]) - event enabled
+
+MiddlewareManager DEBUG: RuntimeMngrM Context change signalled [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM: saveContext dataAddr = 0000021d, dataLenght = 00000016
+
+MiddlewareManager DEBUG: LEKKAS: codeLength = 130
+MiddlewareManager DEBUG: LEKKAS: dataLength = 130
+MiddlewareManager DEBUG: RuntimeMngrM Context changed [0x00030080]
+
+MiddlewareManager DEBUG: EventDispatcherM: starting agent [0x00030080] event handler @ addr [0x0034] of event [0x00000003]
+
+MiddlewareManager DEBUG: VMCPUM: execution started
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000004] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 04 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: PoGenPrimM: handling GetChildInfo(cid [0x00030081], ctype [0x0000cc22], r [0x00000000])
+
+MiddlewareManager DEBUG: ********** opcode: 0x002b LDI R24, 0x60
+
+MiddlewareManager DEBUG: ********** opcode: 0x002c LDI R25, 0x00
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000012] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 12 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: APP: agent 0x00030080: PETROS: root: child created
+
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000013] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 13 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: APP: agent 0x00030080: 0x00030081
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000013] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 13 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: APP: agent 0x00030080: 0x0000cc22
+
+MiddlewareManager DEBUG: VMCPUM: execution ended
+
+MiddlewareManager DEBUG: VMCPUM: 35 opcodes(s) interpreted
+
+MiddlewareManager DEBUG: EventDispatcherM: run done: OK
+
+MiddlewareManager DEBUG: EventDispatcherM: Still 1 execution requests waiting. Posting execution task...
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030081] mask:
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc22
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 1
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 18
+code offs: 000d
+data len: 22
+bss_len: 0
+data_offs: 0023
+
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030081], et [0x00000002]) - no such event handler!
+
+MiddlewareManager DEBUG: EventDispatcherM: Finalize event catched
+
+MiddlewareManager DEBUG: AGENT KILLED EVENT *************************
+
+MiddlewareManager DEBUG: ******************* l:5683,a:30081 finalized
+
+MiddlewareManager DEBUG: l:4414,rmv agent:30081
+
+MiddlewareManager DEBUG: enter sendNackMsg
+
+MiddlewareManager DEBUG: sendNackMsg:ownEpoch:126 ownSeqNo:1
+
+MiddlewareManager DEBUG: PoCommM: sendMsg: addr = 0x00000003, len = 19 type = REL, if = 54, retr = 4
+
+MiddlewareManager DEBUG: line 4441, SIGNALLING agent remove for aid:0x30081, type:0xcc22
+
+MiddlewareManager DEBUG: AGENT REMOVED:0x30081 appId:0x3007f l:4446
+
+MiddlewareManager DEBUG: PoSysInspM: AGENT REMOVED (aid=0x00030081 atype=0x0000CC22 appId=0x0003007F)
+
+MiddlewareManager DEBUG:  PoSysInspM mwa2: confset hdr occupied AND complete (i.e. rootNode) -> don't modify nof_confsets
+
+MiddlewareManager DEBUG: RuntimeMngrM: Removing UA runtime for agent ID: 0x00030081
+
+MiddlewareManager DEBUG: msg:msgid:0, to node:0x3, result NET_OK
+
+MiddlewareManager DEBUG: DBG_PO_AMGR_NET: PoUAMngrmM.nc line 1891: ENTER handleReliable msgflag:4,data len:19
+
+MiddlewareManager DEBUG: line 1755: remEpoch:126 > n.remEpoch:0, first comm setting epoch 
+
+MiddlewareManager DEBUG: DBG_PO_AMGR_NET: line 1781: EPOCH&SEQNO OK message passed remEpoch:126, n.remEpoch:126, remSeqNo:1, n->remSeqno:0
+
+MiddlewareManager DEBUG: l:1924,Nack message received from a:30081, for a:30080
+
+MiddlewareManager DEBUG: l:1954,removing child c:30080
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000005] for agent ID [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: UAImage DUMP:
+type: 0000cc21
+nongen_instr_cnt: 0
+nongen_event_cnt: 0
+gen_event_cnt: 3
+nongen_instr_map_offs: 0000
+nongen_events_map_offs: 0000
+gen_events_map_offs: 0008
+code len: 130
+code offs: 0013
+data len: 58
+bss_len: 0
+data_offs: 0099
+
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000005]) - event enabled
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030080] event type: [0x00000005]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000005]) - event enabled
+
+MiddlewareManager DEBUG: RuntimeMngrM Context change signalled [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM: Context change -> aid == AgentID, not changed
+
+MiddlewareManager DEBUG: EventDispatcherM: starting agent [0x00030080] event handler @ addr [0x002a] of event [0x00000005]
+
+MiddlewareManager DEBUG: VMCPUM: execution started
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000010] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 10 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: CommandDispatcherM: generic instruction: [0x00000003] called by agent
+
+MiddlewareManager DEBUG: PoGenPrimM: Generic instruction: 03 called by agentID [0x00030080]
+
+MiddlewareManager DEBUG: PoUAMngrM: release 30080 child from  30080 
+
+MiddlewareManager DEBUG:  l:3244,release root agent:30080
+
+MiddlewareManager DEBUG: EventDispatcherM: Got new event [0x00000002] for agent ID [0x00030080]
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000002]) - no such event handler!
+
+MiddlewareManager DEBUG: EventDispatcherM: Event handler execution request added to queue for agent ID: [0x00030080] event type: [0x00000002]
+
+MiddlewareManager DEBUG: VMCPUM: execution ended
+
+MiddlewareManager DEBUG: VMCPUM: 3 opcodes(s) interpreted
+
+MiddlewareManager DEBUG: EventDispatcherM: run done: OK
+
+MiddlewareManager DEBUG: EventDispatcherM: Still 1 execution requests waiting. Posting execution task...
+
+MiddlewareManager DEBUG: RuntimeMngrM Retrieving events mask for aid [0x00030080] mask:
+MiddlewareManager DEBUG: EventsMaskI: getMaskInfo(aid [0x00030080], et [0x00000002]) - no such event handler!
+
+MiddlewareManager DEBUG: EventDispatcherM: Finalize event catched
+
+MiddlewareManager DEBUG: AGENT KILLED EVENT *************************
+
+MiddlewareManager DEBUG: ******************* l:5683,a:30080 finalized
+
+MiddlewareManager DEBUG: l:4414,rmv agent:30080
+
+MiddlewareManager DEBUG: enter sendNackMsg
+
+MiddlewareManager DEBUG: sendNackMsg:ownEpoch:126 ownSeqNo:2
+
+MiddlewareManager DEBUG: PoCommM: sendMsg: addr = 0x00000003, len = 19 type = REL, if = 54, retr = 4
+
+MiddlewareManager DEBUG: line 4441, SIGNALLING agent remove for aid:0x30080, type:0xcc21
+
+MiddlewareManager DEBUG: ROOT AGENT REMOVED:0x30080 appId:0x3007f l:4443
+
+MiddlewareManager DEBUG: PoSysInspM: ROOT REMOVED (appId=0x0003007F aid=0x00030080 atype=0x0000CC21)
+
+MiddlewareManager DEBUG: RuntimeMngrM: Removing UA runtime for agent ID: 0x00030080
+
+MiddlewareManager DEBUG: msg:msgid:1, to node:0x3, result NET_OK
+
+MiddlewareManager DEBUG: DBG_PO_AMGR_NET: PoUAMngrmM.nc line 1891: ENTER handleReliable msgflag:4,data len:19
+
+MiddlewareManager DEBUG: line 1755: remEpoch:126 > n.remEpoch:126, first comm setting epoch 
+
+MiddlewareManager DEBUG: DBG_PO_AMGR_NET: line 1781: EPOCH&SEQNO OK message passed remEpoch:126, n.remEpoch:126, remSeqNo:2, n->remSeqno:1
+
+MiddlewareManager DEBUG: l:1924,Nack message received from a:30080, for a:3007f
+
+MiddlewareManager DEBUG: PoUAMngrM: get NACK from root (remove virtual,not recreation) l:1949
+
+MiddlewareManager DEBUG: PoSysInspM: ROOT REMOVED (appId=0x0003007F aid=0x0003007F atype=0x0000CC21)
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 334 seconds
+
+MiddlewareManager DEBUG: PoSystemTimeM: requesting, myT=0 nof_members=1
+
+MiddlewareManager DEBUG: PoSystemTimeM: the only node
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 333 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 332 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 331 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 330 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 329 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 328 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 327 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 326 seconds
+
+RegistryUpdateTaskUpdating registry.
+RegistryUpdateTaskCurrent latitude: 39.0
+RegistryUpdateTaskCurrent longitude: 22.0
+PoCommMgrWriteTaskpaylen(byte) == 23
+PoCommMgrWriteTasksending packet: 0217014043800000000000403600000000000000039251976c
+PoCommMgrWriteTaskWrote() 25bytes.
+PoCommMgrReadTaskread() Header: 2 bytes. Length of payload = 0
+PoCommMgrReadTaskGOT REG_REPLY_PONG!
+PoCommMgrReadTaskRead()'ing
+MiddlewareManager DEBUG: NO MIGRATION
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 325 seconds
+
+MiddlewareManager DEBUG: PoNetworkMngrM: send KEEPALIVE in 324 seconds
+
+BUILD STOPPED (total time: 12 seconds)

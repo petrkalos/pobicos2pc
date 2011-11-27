@@ -1,0 +1,133 @@
+GAS LISTING /tmp/ccHQ6AUY.s 			page 1
+
+
+   1               		.file	"pc2RootAgent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.global __do_copy_data
+   8               		.global __do_clear_bss
+   9               		.section	.events.PoChildUnreachableEvent,"ax",@progbits
+  10               	.global	EVENT_PoChildUnreachableEvent
+  12               	EVENT_PoChildUnreachableEvent:
+  13               	/* prologue: frame size=0 */
+  14               	/* prologue end (size=0) */
+  15 0000 0E94 0000 		call pongiPoGetMyID
+  16 0004 0E94 0000 		call pongiPoRelease
+  17               	/* epilogue: frame size=0 */
+  18 0008 0895      		ret
+  19               	/* epilogue end (size=1) */
+  20               	/* function EVENT_PoChildUnreachableEvent size 5 (4) */
+  22               		.data
+  23               	.LC0:
+  24 0000 5045 5452 		.string	"PETROS: root: child created\n"
+  24      4F53 3A20 
+  24      726F 6F74 
+  24      3A20 6368 
+  24      696C 6420 
+  25               		.section	.events.PoChildCreatedEvent,"ax",@progbits
+  26               	.global	EVENT_PoChildCreatedEvent
+  28               	EVENT_PoChildCreatedEvent:
+  29               	/* prologue: frame size=12 */
+  30 0000 CF93      		push r28
+  31 0002 DF93      		push r29
+  32 0004 CDB7      		in r28,__SP_L__
+  33 0006 DEB7      		in r29,__SP_H__
+  34 0008 2C97      		sbiw r28,12
+  35 000a DEBF      		out __SP_H__,r29
+  36 000c CDBF      		out __SP_L__,r28
+  37               	/* prologue end (size=7) */
+  38 000e AE01      		movw r20,r28
+  39 0010 475F      		subi r20,lo8(-(9))
+  40 0012 5F4F      		sbci r21,hi8(-(9))
+  41 0014 BE01      		movw r22,r28
+  42 0016 6B5F      		subi r22,lo8(-(5))
+  43 0018 7F4F      		sbci r23,hi8(-(5))
+  44 001a CE01      		movw r24,r28
+  45 001c 0196      		adiw r24,1
+  46 001e 0E94 0000 		call pongiPoGetChildInfoOld
+  47 0022 80E0      		ldi r24,lo8(.LC0)
+  48 0024 90E0      		ldi r25,hi8(.LC0)
+  49 0026 0E94 0000 		call pongiPoDbgString
+  50 002a 6981      		ldd r22,Y+1
+  51 002c 7A81      		ldd r23,Y+2
+  52 002e 8B81      		ldd r24,Y+3
+  53 0030 9C81      		ldd r25,Y+4
+  54 0032 0E94 0000 		call pongiPoDbgUInt32
+  55 0036 6D81      		ldd r22,Y+5
+  56 0038 7E81      		ldd r23,Y+6
+GAS LISTING /tmp/ccHQ6AUY.s 			page 2
+
+
+  57 003a 8F81      		ldd r24,Y+7
+  58 003c 9885      		ldd r25,Y+8
+  59 003e 0E94 0000 		call pongiPoDbgUInt32
+  60               	/* epilogue: frame size=12 */
+  61 0042 2C96      		adiw r28,12
+  62 0044 DEBF      		out __SP_H__,r29
+  63 0046 CDBF      		out __SP_L__,r28
+  64 0048 DF91      		pop r29
+  65 004a CF91      		pop r28
+  66 004c 0895      		ret
+  67               	/* epilogue end (size=6) */
+  68               	/* function EVENT_PoChildCreatedEvent size 39 (26) */
+  70               		.data
+  71               	.LC1:
+  72 001d 5045 5452 		.string	"PETROS: root: Create child\n"
+  72      4F53 3A20 
+  72      726F 6F74 
+  72      3A20 4372 
+  72      6561 7465 
+  73               		.section	.events.PoInitEvent,"ax",@progbits
+  74               	.global	EVENT_PoInitEvent
+  76               	EVENT_PoInitEvent:
+  77               	/* prologue: frame size=0 */
+  78 0000 0F93      		push r16
+  79 0002 1F93      		push r17
+  80               	/* prologue end (size=2) */
+  81 0004 80E0      		ldi r24,lo8(.LC1)
+  82 0006 90E0      		ldi r25,hi8(.LC1)
+  83 0008 0E94 0000 		call pongiPoDbgString
+  84 000c 00E0      		ldi r16,lo8(0)
+  85 000e 10E0      		ldi r17,hi8(0)
+  86 0010 20E0      		ldi r18,hlo8(0)
+  87 0012 30E0      		ldi r19,hhi8(0)
+  88 0014 48E8      		ldi r20,lo8(5000)
+  89 0016 53E1      		ldi r21,hi8(5000)
+  90 0018 62E2      		ldi r22,lo8(52258)
+  91 001a 7CEC      		ldi r23,hi8(52258)
+  92 001c 80E0      		ldi r24,hlo8(52258)
+  93 001e 90E0      		ldi r25,hhi8(52258)
+  94 0020 0E94 0000 		call pongiPoCreateGenericAgent
+  95               	/* epilogue: frame size=0 */
+  96 0024 1F91      		pop r17
+  97 0026 0F91      		pop r16
+  98 0028 0895      		ret
+  99               	/* epilogue end (size=3) */
+ 100               	/* function EVENT_PoInitEvent size 21 (16) */
+ 102               	/* File "pc2RootAgent.c": code   65 = 0x0041 (  46), prologues   9, epilogues  10 */
+GAS LISTING /tmp/ccHQ6AUY.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pc2RootAgent.c
+     /tmp/ccHQ6AUY.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccHQ6AUY.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccHQ6AUY.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccHQ6AUY.s:5      *ABS*:00000000 __tmp_reg__
+     /tmp/ccHQ6AUY.s:6      *ABS*:00000001 __zero_reg__
+     /tmp/ccHQ6AUY.s:12     .events.PoChildUnreachableEvent:00000000 EVENT_PoChildUnreachableEvent
+     /tmp/ccHQ6AUY.s:28     .events.PoChildCreatedEvent:00000000 EVENT_PoChildCreatedEvent
+     /tmp/ccHQ6AUY.s:76     .events.PoInitEvent:00000000 EVENT_PoInitEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+pongiPoGetMyID
+pongiPoRelease
+pongiPoGetChildInfoOld
+pongiPoDbgString
+pongiPoDbgUInt32
+pongiPoCreateGenericAgent

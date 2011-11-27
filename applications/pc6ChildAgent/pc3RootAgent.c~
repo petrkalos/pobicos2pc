@@ -1,0 +1,28 @@
+#include <pobicos.h>
+#include <string.h>
+
+#define CREATION_TIMEOUT 50
+
+#define MAX_TIMERS 30
+#define TIMER_TIMEOUT 2000
+
+#define ROOT_ID 0x00880009
+#define CHILD_ID 0x00880010
+
+EVENT_HANDLER(PoInitEvent){
+  PoEnableEvent(PoReportArrivedEvent);
+  
+  PoDbgString("PETROS: child init\n");
+}
+
+EVENT_HANDLER(PoReportArrivedEvent) {
+	PoMsg msg;
+	PoAgentID cid;
+	PoAgentType ctype;
+	PoReqHandle h;
+
+	PoGetReport(&msg);
+	
+	PoDbgString("PETROS: Message arrived\n");
+	PoDbgString((char *)msg.data);
+}

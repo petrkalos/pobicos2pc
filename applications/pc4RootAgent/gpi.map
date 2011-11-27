@@ -1,0 +1,6 @@
+pongiPoCreateGenericAgent = 0x10002;
+pongiPoDbgString = 0x10024;
+pongiPoDbgUInt32 = 0x10026;
+pongiPoGetChildInfoOld = 0x10008;
+pongiPoGetMyID = 0x10020;
+pongiPoRelease = 0x10006;

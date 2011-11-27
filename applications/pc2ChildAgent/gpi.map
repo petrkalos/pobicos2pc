@@ -1,0 +1,3 @@
+pongiPoDbgString = 0x10024;
+pongiPoGetMyID = 0x10020;
+pongiPoRelease = 0x10006;

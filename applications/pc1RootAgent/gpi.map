@@ -1,0 +1,6 @@
+pongiPoDbgString = 0x10024;
+pongiPoDbgUInt32 = 0x10026;
+pongiPoGetMyID = 0x10020;
+pongiPoGetTimerID = 0x10014;
+pongiPoRelease = 0x10006;
+pongiPoSetTimer = 0x10012;

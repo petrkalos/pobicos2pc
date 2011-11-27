@@ -1,0 +1,121 @@
+GAS LISTING /tmp/cceew5i1.s 			page 1
+
+
+   1               		.file	"pc1RootAgent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.global __do_copy_data
+   8               		.global __do_clear_bss
+   9               		.data
+  10               	.LC0:
+  11 0000 5045 5452 		.string	"PETROS: Testing timers for MAX_TIMERS:"
+  11      4F53 3A20 
+  11      5465 7374 
+  11      696E 6720 
+  11      7469 6D65 
+  12               		.section	.events.PoInitEvent,"ax",@progbits
+  13               	.global	EVENT_PoInitEvent
+  15               	EVENT_PoInitEvent:
+  16               	/* prologue: frame size=0 */
+  17               	/* prologue end (size=0) */
+  18 0000 80E0      		ldi r24,lo8(.LC0)
+  19 0002 90E0      		ldi r25,hi8(.LC0)
+  20 0004 0E94 0000 		call pongiPoDbgString
+  21 0008 6AE0      		ldi r22,lo8(10)
+  22 000a 70E0      		ldi r23,hi8(10)
+  23 000c 80E0      		ldi r24,hlo8(10)
+  24 000e 90E0      		ldi r25,hhi8(10)
+  25 0010 0E94 0000 		call pongiPoDbgUInt32
+  26 0014 48EE      		ldi r20,lo8(1000)
+  27 0016 53E0      		ldi r21,hi8(1000)
+  28 0018 60E0      		ldi r22,hlo8(1000)
+  29 001a 70E0      		ldi r23,hhi8(1000)
+  30 001c 80E0      		ldi r24,lo8(0)
+  31 001e 0E94 0000 		call pongiPoSetTimer
+  32               	/* epilogue: frame size=0 */
+  33 0022 0895      		ret
+  34               	/* epilogue end (size=1) */
+  35               	/* function EVENT_PoInitEvent size 18 (17) */
+  37               		.data
+  38               	.LC1:
+  39 0027 5045 5452 		.string	"PETROS: Timeout timer:"
+  39      4F53 3A20 
+  39      5469 6D65 
+  39      6F75 7420 
+  39      7469 6D65 
+  40               		.section	.events.PoTimeoutEvent,"ax",@progbits
+  41               	.global	EVENT_PoTimeoutEvent
+  43               	EVENT_PoTimeoutEvent:
+  44               	/* prologue: frame size=1 */
+  45 0000 CF93      		push r28
+  46 0002 DF93      		push r29
+  47 0004 CDB7      		in r28,__SP_L__
+  48 0006 DEB7      		in r29,__SP_H__
+  49 0008 2197      		sbiw r28,1
+  50 000a DEBF      		out __SP_H__,r29
+  51 000c CDBF      		out __SP_L__,r28
+  52               	/* prologue end (size=7) */
+GAS LISTING /tmp/cceew5i1.s 			page 2
+
+
+  53 000e CE01      		movw r24,r28
+  54 0010 0196      		adiw r24,1
+  55 0012 0E94 0000 		call pongiPoGetTimerID
+  56 0016 80E0      		ldi r24,lo8(.LC1)
+  57 0018 90E0      		ldi r25,hi8(.LC1)
+  58 001a 0E94 0000 		call pongiPoDbgString
+  59 001e 6981      		ldd r22,Y+1
+  60 0020 7727      		clr r23
+  61 0022 8827      		clr r24
+  62 0024 9927      		clr r25
+  63 0026 0E94 0000 		call pongiPoDbgUInt32
+  64 002a 8981      		ldd r24,Y+1
+  65 002c 8A30      		cpi r24,lo8(10)
+  66 002e 00F4      		brsh .L4
+  67 0030 8F5F      		subi r24,lo8(-(1))
+  68 0032 8983      		std Y+1,r24
+  69 0034 48EE      		ldi r20,lo8(1000)
+  70 0036 53E0      		ldi r21,hi8(1000)
+  71 0038 60E0      		ldi r22,hlo8(1000)
+  72 003a 70E0      		ldi r23,hhi8(1000)
+  73 003c 0E94 0000 		call pongiPoSetTimer
+  74 0040 00C0      		rjmp .L7
+  75               	.L4:
+  76 0042 0E94 0000 		call pongiPoGetMyID
+  77 0046 0E94 0000 		call pongiPoRelease
+  78               	.L7:
+  79               	/* epilogue: frame size=1 */
+  80 004a 2196      		adiw r28,1
+  81 004c DEBF      		out __SP_H__,r29
+  82 004e CDBF      		out __SP_L__,r28
+  83 0050 DF91      		pop r29
+  84 0052 CF91      		pop r28
+  85 0054 0895      		ret
+  86               	/* epilogue end (size=6) */
+  87               	/* function EVENT_PoTimeoutEvent size 43 (30) */
+  89               	/* File "pc1RootAgent.c": code   61 = 0x003d (  47), prologues   7, epilogues   7 */
+GAS LISTING /tmp/cceew5i1.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pc1RootAgent.c
+     /tmp/cceew5i1.s:2      *ABS*:0000003f __SREG__
+     /tmp/cceew5i1.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cceew5i1.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cceew5i1.s:5      *ABS*:00000000 __tmp_reg__
+     /tmp/cceew5i1.s:6      *ABS*:00000001 __zero_reg__
+     /tmp/cceew5i1.s:15     .events.PoInitEvent:00000000 EVENT_PoInitEvent
+     /tmp/cceew5i1.s:43     .events.PoTimeoutEvent:00000000 EVENT_PoTimeoutEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+pongiPoDbgString
+pongiPoDbgUInt32
+pongiPoSetTimer
+pongiPoGetTimerID
+pongiPoGetMyID
+pongiPoRelease

@@ -1,0 +1,98 @@
+GAS LISTING /tmp/cc46CHWd.s 			page 1
+
+
+   1               		.file	"pc6ChildAgent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.global __do_copy_data
+   8               		.global __do_clear_bss
+   9               		.data
+  10               	.LC0:
+  11 0000 6368 696C 		.string	"child: init\n"
+  11      643A 2069 
+  11      6E69 740A 
+  11      00
+  12               		.section	.events.PoInitEvent,"ax",@progbits
+  13               	.global	EVENT_PoInitEvent
+  15               	EVENT_PoInitEvent:
+  16               	/* prologue: frame size=0 */
+  17               	/* prologue end (size=0) */
+  18 0000 80E0      		ldi r24,lo8(.LC0)
+  19 0002 90E0      		ldi r25,hi8(.LC0)
+  20 0004 0E94 0000 		call pongiPoDbgString
+  21               	/* epilogue: frame size=0 */
+  22 0008 0895      		ret
+  23               	/* epilogue end (size=1) */
+  24               	/* function EVENT_PoInitEvent size 5 (4) */
+  26               		.data
+  27               	.LC1:
+  28 000d 6368 696C 		.string	"child: got a command\n"
+  28      643A 2067 
+  28      6F74 2061 
+  28      2063 6F6D 
+  28      6D61 6E64 
+  29               		.section	.events.PoCommandArrivedEvent,"ax",@progbits
+  30               	.global	EVENT_PoCommandArrivedEvent
+  32               	EVENT_PoCommandArrivedEvent:
+  33               	/* prologue: frame size=28 */
+  34 0000 0F93      		push r16
+  35 0002 1F93      		push r17
+  36 0004 CF93      		push r28
+  37 0006 DF93      		push r29
+  38 0008 CDB7      		in r28,__SP_L__
+  39 000a DEB7      		in r29,__SP_H__
+  40 000c 6C97      		sbiw r28,28
+  41 000e DEBF      		out __SP_H__,r29
+  42 0010 CDBF      		out __SP_L__,r28
+  43               	/* prologue end (size=9) */
+  44 0012 80E0      		ldi r24,lo8(.LC1)
+  45 0014 90E0      		ldi r25,hi8(.LC1)
+  46 0016 0E94 0000 		call pongiPoDbgString
+  47 001a 8E01      		movw r16,r28
+  48 001c 0F5F      		subi r16,lo8(-(1))
+  49 001e 1F4F      		sbci r17,hi8(-(1))
+  50 0020 C801      		movw r24,r16
+  51 0022 0E94 0000 		call pongiPoGetCommand
+  52 0026 CE01      		movw r24,r28
+  53 0028 0296      		adiw r24,2
+GAS LISTING /tmp/cc46CHWd.s 			page 2
+
+
+  54 002a 0E94 0000 		call pongiPoDbgString
+  55 002e 60E0      		ldi r22,lo8(0)
+  56 0030 C801      		movw r24,r16
+  57 0032 0E94 0000 		call pongiPoSendReport
+  58               	/* epilogue: frame size=28 */
+  59 0036 6C96      		adiw r28,28
+  60 0038 DEBF      		out __SP_H__,r29
+  61 003a CDBF      		out __SP_L__,r28
+  62 003c DF91      		pop r29
+  63 003e CF91      		pop r28
+  64 0040 1F91      		pop r17
+  65 0042 0F91      		pop r16
+  66 0044 0895      		ret
+  67               	/* epilogue end (size=8) */
+  68               	/* function EVENT_PoCommandArrivedEvent size 35 (18) */
+  70               	/* File "pc6ChildAgent.c": code   40 = 0x0028 (  22), prologues   9, epilogues   9 */
+GAS LISTING /tmp/cc46CHWd.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pc6ChildAgent.c
+     /tmp/cc46CHWd.s:2      *ABS*:0000003f __SREG__
+     /tmp/cc46CHWd.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cc46CHWd.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cc46CHWd.s:5      *ABS*:00000000 __tmp_reg__
+     /tmp/cc46CHWd.s:6      *ABS*:00000001 __zero_reg__
+     /tmp/cc46CHWd.s:15     .events.PoInitEvent:00000000 EVENT_PoInitEvent
+     /tmp/cc46CHWd.s:32     .events.PoCommandArrivedEvent:00000000 EVENT_PoCommandArrivedEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+pongiPoDbgString
+pongiPoGetCommand
+pongiPoSendReport

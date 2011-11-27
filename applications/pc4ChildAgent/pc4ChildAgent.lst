@@ -1,0 +1,47 @@
+GAS LISTING /tmp/cctRNRJE.s 			page 1
+
+
+   1               		.file	"pc4ChildAgent.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.global __do_copy_data
+   8               		.global __do_clear_bss
+   9               		.data
+  10               	.LC0:
+  11 0000 5045 5452 		.string	"PETROS: child: Hello\n"
+  11      4F53 3A20 
+  11      6368 696C 
+  11      643A 2048 
+  11      656C 6C6F 
+  12               		.section	.events.PoInitEvent,"ax",@progbits
+  13               	.global	EVENT_PoInitEvent
+  15               	EVENT_PoInitEvent:
+  16               	/* prologue: frame size=0 */
+  17               	/* prologue end (size=0) */
+  18 0000 80E0      		ldi r24,lo8(.LC0)
+  19 0002 90E0      		ldi r25,hi8(.LC0)
+  20 0004 0E94 0000 		call pongiPoDbgString
+  21               	/* epilogue: frame size=0 */
+  22 0008 0895      		ret
+  23               	/* epilogue end (size=1) */
+  24               	/* function EVENT_PoInitEvent size 5 (4) */
+  26               	/* File "pc4ChildAgent.c": code    5 = 0x0005 (   4), prologues   0, epilogues   1 */
+GAS LISTING /tmp/cctRNRJE.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pc4ChildAgent.c
+     /tmp/cctRNRJE.s:2      *ABS*:0000003f __SREG__
+     /tmp/cctRNRJE.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cctRNRJE.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cctRNRJE.s:5      *ABS*:00000000 __tmp_reg__
+     /tmp/cctRNRJE.s:6      *ABS*:00000001 __zero_reg__
+     /tmp/cctRNRJE.s:15     .events.PoInitEvent:00000000 EVENT_PoInitEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+pongiPoDbgString
