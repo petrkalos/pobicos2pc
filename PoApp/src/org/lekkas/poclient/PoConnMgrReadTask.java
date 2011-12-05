@@ -10,196 +10,217 @@ import java.nio.channels.*;
 import org.lekkas.poclient.PoAPI.PoAPI;
 import org.lekkas.poclient.PoEvents.PoNetworkPacketRx;
 
+import org.kalos.Log;
+
 public class PoConnMgrReadTask extends Thread implements Runnable {
 
-	private final String TAG = "PoCommMgrReadTask";
-	private SocketChannel sockch;
-	private ByteBuffer network_msg_header, payload;
-	private boolean Running;
-	
-	public static boolean logBytes = false;
-	public static int receivedBytes, cntRxPkts;
-	
-	
-	private Selector selector;
-	
-	public static int uByteToInt(byte b) {
-		return (int) (b & 0xFF);
-	}
-	public PoConnMgrReadTask(Selector sel, SocketChannel sock) {
-		Running = false;
-		sockch = sock;
-		selector = sel;
-	}
-	
-	public void run() {
-		int ret, bytes_read;
-		
-		System.out.println(TAG+ "Thread started!");
-		network_msg_header = ByteBuffer.allocate(Network_Msg.HEADER_LEN);	// Allocate space 
-																			// for Msg_type(1), Seq(1) + Len(1) fields
-		payload = null;
-		Running = true;
-		while(!Thread.currentThread().isInterrupted()) {
-			try {
-				/*
-				 * MSG Reply format:
-				 * 
-				 * Msg Type:	byte:	1 byte
-				 * Len:			byte:	1 byte
-		 		 * Payload:		byte[]:	{Len} bytes
-		 		 * 
-		 		 * Where Payload:
-		 		 * 
-		 		 * 1) For POBICOS messages:
-				 * Src addr		: char	: 2 bytes
-				 * Dest addr	: char	: 2 bytes
-				 * Msg Len		: byte	: 1 byte
-				 * Msg			: byte[]: {Msg Len} bytes;
-				 * 
-				 * 2) For registration messages:
-				 *  a)2 bytes, (Registered node address) + 4 bytes(seed) for welcome messages
-				 *  b)no payload for pong messages
-				 */
-				System.out.println(TAG+ "Read()'ing");
-				/*
-				 * Reading network message header.
-				 */
-				selector.select();
-				ret = sockch.read(network_msg_header);
-				if(ret == -1) throw new IOException("sockch.read() returned -1. Server has probably " +
-													"closed the connection");
-				if(ret == 0)
-					continue;
-				
-				bytes_read = ret;
-				while(bytes_read < Network_Msg.HEADER_LEN) {
-					ret = sockch.read(network_msg_header);
-					if(ret == -1) throw new IOException("sockch.read() returned -1");
-					bytes_read += ret;
-				}
-				
-				/*
-				 * Reading message payload
-				 */
-				int len = uByteToInt(network_msg_header.get(1));
-				System.out.println(TAG+ "read() Header: "+ret+" bytes. Length of payload = "+len);
-				if(len != 0) {
-					payload = ByteBuffer.allocate(len);
-					ret = sockch.read(payload);
-					if(ret == -1) throw new IOException("sockch.read() returned -1");
-					bytes_read = ret;
-					while(bytes_read < len) {
-						ret = sockch.read(payload);
-						if(ret == -1) throw new IOException("sockch.read() returned -1");
-						bytes_read += ret;
-					}
-				}
-				
-				byte flag = network_msg_header.get(0);
-				if(flag == Network_Msg.REG_REPLY_WELCOME) {
-					System.out.println(TAG+ "GOT REG_REPLY_WELCOME! addr:"+byteArrayToAscii(payload.array()));
-					byte[] addr = { payload.get(0), payload.get(1) };
-					byte[] seed = { payload.get(2), payload.get(3), payload.get(4), payload.get(5) };
-					System.out.println(TAG+ "addr: "+byteArrayToAscii(addr));
-					System.out.println(TAG+ "seed: "+byteArrayToAscii(seed));
-					
-					char a = Serialization.byteArrayToChar(addr);
-					int s = Serialization.byteArrayToInt(seed);
-					PoRegistryService.getInstance().setMyAddr(a, s);
-					PoRegistryService.getInstance().setStatusState(PoRegistryService.STATE.REGISTERED);
-					sendRegistryIntent();	// first time connection; start registry update thread.
-				}
-				if(flag == Network_Msg.REG_REPLY_FAIL) {
-					System.out.println(TAG+ "Registration failed!");
-					PoRegistryService.getInstance().setStatusState(PoRegistryService.STATE.REJECTED);
-					sendRegistryIntent();	// restart service
-					cancel();
-				}
-				if(flag == Network_Msg.REG_REPLY_PONG) {
-					System.out.println(TAG+ "GOT REG_REPLY_PONG!");
-					PoRegistryService.getInstance().setStatusState(PoRegistryService.STATE.REGISTERED);
-					if(!PoConnectionManager.getInstance().isRegistryUpdateThreadRunning())
-						sendRegistryIntent();	// needed to restart update thread in case we have
-												// just reconnected.
-				}
-				if(flag == Network_Msg.POBICOS_MSG) {
-					System.out.println(TAG+ "GOT POBICOS MESSAGE!");
-					if(logBytes) {
-						receivedBytes += (payload.capacity()+2);
-						cntRxPkts++;
-					}
-					PoAPI.getEventQueue().offer(new PoNetworkPacketRx(flag, (byte)len, payload.array()));
-				}
-				
-				if(payload != null)
-					payload.clear();
-				network_msg_header.clear();
-			} catch(ClosedByInterruptException e) {
-				System.out.println(TAG+ "ClosedByInterruptException: "+e.toString());
-				cleanup();
-				//if(!PoConnectionManager.disconnectCalled())
-					//sendReconnectIntent();
-				return;
-			} catch (ClosedChannelException e) {	// by socket	
-				System.out.println(TAG+ "ClosedChannelException: "+e.toString());
-				cleanup();
-				//if(!PoConnectionManager.disconnectCalled())
-					//sendReconnectIntent();
-				return;
-			} catch (NotYetConnectedException e) {	// by socket
-				System.out.println(TAG+ "NotYetConnectedException: "+e.toString());
-				cleanup();
-				//if(!PoConnectionManager.disconnectCalled())
-				//	sendReconnectIntent();
-				return;
-			} catch(IOException e) {
-				System.out.println(TAG+ "IOException: "+e.toString());
-				cleanup();
-				//if(!PoConnectionManager.disconnectCalled())
-					//sendReconnectIntent();
-				return;
-			} /*catch(Exception e) {
-				System.out.println(TAG+ "Exception: "+e.toString());
-				cleanup();
-				sendReconnectIntent();
-				return; 
-			} */
-		}
-	}
+    private final String TAG = "PoCommMgrReadTask";
+    private SocketChannel sockch;
+    private ByteBuffer network_msg_header, payload;
+    private boolean Running;
+    public static boolean logBytes = false;
+    public static int receivedBytes, cntRxPkts;
+    private Selector selector;
 
-	public boolean isRunning() {
-		return Running;
-	}
-	private String byteArrayToAscii(byte[] b) {
-		String result = "";
-		if(b == null)
-			return result;
+    public static int uByteToInt(byte b) {
+        return (int) (b & 0xFF);
+    }
 
-		for (int i=0; i < b.length; i++) {
-		    result +=
-		    Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
-		}
-		return result;
-	}
-	private void cleanup() {
-		Running = false;
-		sockch = null;
-		network_msg_header = null;
-		payload = null;
-	}
-	/*
-	private void sendReconnectIntent() {
-		Intent myIntent = new Intent(PoApp.getMiddlewareService(), PoConnStatusBR.class);
-    	myIntent.putExtra("reconnect", "");
-    	PoApp.getMiddlewareService().getApplicationContext().sendBroadcast(myIntent);
-	} */
-	
-        private void sendRegistryIntent() {
-                PoApp.getMiddlewareService().sendBroadcast("registry_event","");
-	}
-        
-	public void cancel() {
-		interrupt();
-	}
+    public PoConnMgrReadTask(Selector sel, SocketChannel sock) {
+        Running = false;
+        sockch = sock;
+        selector = sel;
+    }
+
+    public void run() {
+        int ret, bytes_read;
+
+        Log.w(TAG, "Thread started!");
+        network_msg_header = ByteBuffer.allocate(Network_Msg.HEADER_LEN);	// Allocate space 
+        // for Msg_type(1), Seq(1) + Len(1) fields
+        payload = null;
+        Running = true;
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                /*
+                 * MSG Reply format:
+                 * 
+                 * Msg Type:	byte:	1 byte
+                 * Len:			byte:	1 byte
+                 * Payload:		byte[]:	{Len} bytes
+                 * 
+                 * Where Payload:
+                 * 
+                 * 1) For POBICOS messages:
+                 * Src addr		: char	: 2 bytes
+                 * Dest addr	: char	: 2 bytes
+                 * Msg Len		: byte	: 1 byte
+                 * Msg			: byte[]: {Msg Len} bytes;
+                 * 
+                 * 2) For registration messages:
+                 *  a)2 bytes, (Registered node address) + 4 bytes(seed) for welcome messages
+                 *  b)no payload for pong messages
+                 */
+                Log.w(TAG, "Read()'ing");
+                /*
+                 * Reading network message header.
+                 */
+                selector.select();
+                ret = sockch.read(network_msg_header);
+                if (ret == -1) {
+                    throw new IOException("sockch.read() returned -1. Server has probably "
+                            + "closed the connection");
+                }
+                if (ret == 0) {
+                    continue;
+                }
+
+                bytes_read = ret;
+                while (bytes_read < Network_Msg.HEADER_LEN) {
+                    ret = sockch.read(network_msg_header);
+                    if (ret == -1) {
+                        throw new IOException("sockch.read() returned -1");
+                    }
+                    bytes_read += ret;
+                }
+
+                /*
+                 * Reading message payload
+                 */
+                int len = uByteToInt(network_msg_header.get(1));
+                Log.w(TAG, "read() Header: " + ret + " bytes. Length of payload = " + len);
+                if (len != 0) {
+                    payload = ByteBuffer.allocate(len);
+                    ret = sockch.read(payload);
+                    if (ret == -1) {
+                        throw new IOException("sockch.read() returned -1");
+                    }
+                    bytes_read = ret;
+                    while (bytes_read < len) {
+                        ret = sockch.read(payload);
+                        if (ret == -1) {
+                            throw new IOException("sockch.read() returned -1");
+                        }
+                        bytes_read += ret;
+                    }
+                }
+
+                byte flag = network_msg_header.get(0);
+                if (flag == Network_Msg.SERVER_SEARCH_RES){
+                    System.out.println("PETROS: Server search response: " + payload.getInt(1));
+     
+                }
+                if (flag == Network_Msg.REG_REPLY_WELCOME) {
+                    Log.w(TAG, "GOT REG_REPLY_WELCOME! addr:" + byteArrayToAscii(payload.array()));
+                    byte[] addr = {payload.get(0), payload.get(1)};
+                    byte[] seed = {payload.get(2), payload.get(3), payload.get(4), payload.get(5)};
+                    Log.w(TAG, "addr: " + byteArrayToAscii(addr));
+                    Log.w(TAG, "seed: " + byteArrayToAscii(seed));
+
+                    char a = Serialization.byteArrayToChar(addr);
+                    int s = Serialization.byteArrayToInt(seed);
+                    PoRegistryService.getInstance().setMyAddr(a, s);
+                    PoRegistryService.getInstance().setState(PoRegistryService.STATE.REGISTERED);
+                    sendRegistryIntent();	// first time connection; start registry update thread.
+                }
+                if (flag == Network_Msg.REG_REPLY_FAIL) {
+                    Log.w(TAG, "Registration failed!");
+                    PoRegistryService.getInstance().setState(PoRegistryService.STATE.REJECTED);
+                    sendRegistryIntent();	// restart service
+                    cancel();
+                }
+                if (flag == Network_Msg.REG_REPLY_PONG) {
+                    Log.w(TAG, "GOT REG_REPLY_PONG!");
+                    PoRegistryService.getInstance().setState(PoRegistryService.STATE.REGISTERED);
+                    if (!PoConnectionManager.getInstance().isRegistryUpdateThreadRunning()) {
+                        sendRegistryIntent();	// needed to restart update thread in case we have
+                    }												// just reconnected.
+                }
+                if (flag == Network_Msg.POBICOS_MSG) {
+                    Log.w(TAG, "GOT POBICOS MESSAGE!");
+                    if (logBytes) {
+                        receivedBytes += (payload.capacity() + 2);
+                        cntRxPkts++;
+                    }
+                    PoAPI.getEventQueue().offer(new PoNetworkPacketRx(flag, (byte) len, payload.array()));
+                }
+
+                if (payload != null) {
+                    payload.clear();
+                }
+                network_msg_header.clear();
+            } catch (ClosedByInterruptException e) {
+                Log.w(TAG, "ClosedByInterruptException: " + e.toString());
+                cleanup();
+                //if(!PoConnectionManager.disconnectCalled())
+                //sendReconnectIntent();
+                return;
+            } catch (ClosedChannelException e) {	// by socket	
+                Log.w(TAG, "ClosedChannelException: " + e.toString());
+                cleanup();
+                //if(!PoConnectionManager.disconnectCalled())
+                //sendReconnectIntent();
+                return;
+            } catch (NotYetConnectedException e) {	// by socket
+                Log.w(TAG, "NotYetConnectedException: " + e.toString());
+                cleanup();
+                //if(!PoConnectionManager.disconnectCalled())
+                //	sendReconnectIntent();
+                return;
+            } catch (IOException e) {
+                Log.w(TAG, "IOException: " + e.toString());
+                cleanup();
+                //if(!PoConnectionManager.disconnectCalled())
+                //sendReconnectIntent();
+                return;
+            } /*catch(Exception e) {
+            Log.w(TAG, "Exception: "+e.toString());
+            cleanup();
+            sendReconnectIntent();
+            return; 
+            } */
+        }
+    }
+
+    public boolean isRunning() {
+        return Running;
+    }
+
+    private String byteArrayToAscii(byte[] b) {
+        String result = "";
+        if (b == null) {
+            return result;
+        }
+
+        for (int i = 0; i < b.length; i++) {
+            result +=
+                    Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+        }
+        return result;
+    }
+
+    private void cleanup() {
+        Running = false;
+        sockch = null;
+        network_msg_header = null;
+        payload = null;
+    }
+
+    private void sendRegistryIntent() {
+        Log.w(TAG, "GOT registry event");
+        /*
+         * If we get a rejected state it means that our seed has expired.
+         */
+        if (PoRegistryService.getInstance().getState() == PoRegistryService.STATE.REJECTED) {
+            PoMiddlewareService.getInstance().stopPoMiddleware();
+        }
+        if (PoRegistryService.getInstance().getState() == PoRegistryService.STATE.REGISTERED) {
+            PoConnectionManager.getInstance().startUpdateThread();
+        }
+        Log.w(TAG, "BROADCAST RECEIVER ONCREATE() RETURNING...(REGISTRY_EVENT)");
+    }
+
+    public void cancel() {
+        interrupt();
+    }
 }

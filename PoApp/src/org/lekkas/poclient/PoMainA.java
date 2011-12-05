@@ -3,99 +3,47 @@
  */
 package org.lekkas.poclient;
 
+import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.kalos.Log;
+
 import org.lekkas.poclient.AppLoader.PoAppPillLoader;
 
-import java.net.InetAddress;
-
-public class PoMainA {
+public class PoMainA{
 
     private static final String TAG = "PoMainA";
-    private static final String host = "192.168.178.29";
-    private static boolean app_status;
-    private static String path;
+    private static String[] args;
+    private static String host = "192.168.178.29";
 
     public static void main(String args[]) {
-        PoMainA main = new PoMainA();
-        if (args.length == 0) {
-            PoApp.setAppPill(true);
-        } else {
-            path = args[0];
+        PoMainA.args = args;
+        
+        firstConnectivityCheck();
+        
+        PoApp.setAppPill(args.length==1);
+        try {
+            Thread.sleep(2000);
+            PoRegistryService.getInstance().getServer();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PoMainA.class.getName()).log(Level.SEVERE, null, ex);
         }
-        main.create();
-        main.start();
     }
 
     public static String getHost() {
         return host;
     }
-    /*
-     * False for disconnected, true for connected.
-     */
-
-    public static void startApp() {
-        if (!PoApp.isAppPill()) {
-            System.err.println("Start application...");
-            PoAppPillLoader.getInstance().loadApp(path + "pc3App.hex");
+    
+    public static void startApp(){
+        if(PoApp.isAppPill()){
+            PoAppPillLoader.getInstance().loadAndStartApp(args[0]+"pc3App.hex");
         }
     }
 
-    public void setConnectivityStatus(boolean s) {
-        if (s) {
-            System.out.println("Connected.");
-        } else {
-            System.out.println("Disconnected.");
-        }
-    }
-
-    private void setAppStatus(boolean s) {
-        app_status = s;
-        if (s) {
-            System.out.println("App started.");
-        } else {
-            System.out.println("No App loaded.");
-        }
-    }
-
-    /** Called when the activity is first created. */
-    private void create() {
-        PoApp.setMainActivity(this);
-        System.out.println(TAG + " onCreate()");
-        firstConnectivityCheck();
-        System.out.println(TAG + " MAINACTIVITY oncreate RETURNING");
-    }
-
-    private void start() {
-        System.out.println(TAG + " onStart() called.");
-        if (!PoApp.isAppPill()) {
-            connectivityCheck();
-        } else {
-            setAppStatus(app_status);
-        }
-        System.out.println(TAG + " MAINACTIVITY onstart RETURNING ");
-    }
-
-    public boolean onOptionsItemSelected() {
-        /*switch (item.getItemId()) {
-        case R.id.menu_exit:
-        PoMiddlewareService.setOnAppExit();
-        if (PoMiddlewareService.isRunning()) {
-        service_intent = new Intent(this, PoMiddlewareService.class);
-        stopService(service_intent);
-        
-        service_intent = new Intent(this, PoRegistryService.class);
-        stopService(service_intent);
-        }
-        finish();
-        }*/
-        return true;
-    }
-
-    private void firstConnectivityCheck() {
+    private static void firstConnectivityCheck() {
         if (connectivityCheck() && !PoMiddlewareService.isRunning()) {
-            System.out.println("Starting the middleware...");
-
-            PoRegistryService.getInstance().create();
-            PoMiddlewareService.getInstance().create();
+            PoMiddlewareService.getInstance().onCreate();
         }
     }
 
@@ -103,22 +51,34 @@ public class PoMainA {
      * Returns true if we have an available network, 
      * false otherwise.
      */
-    private boolean connectivityCheck() {
+    private static boolean connectivityCheck() {
         try {
             int timeout = 2000;
             InetAddress[] addresses = InetAddress.getAllByName(PoMainA.getHost());
             for (InetAddress address : addresses) {
                 if (address.isReachable(timeout)) {
-                    System.out.printf("%s is reachable%n", address);
+                    Log.d(TAG, address+ " is reachable");
                     return true;
                 } else {
-                    System.out.printf("%s could not be contacted%n", address);
+                    Log.e(TAG,address+"could not be contacted%n");
                     return false;
                 }
             }
         } catch (Exception e) {
-            System.out.printf("Unknown host: %s%n", "www.java2s.com");
+            Log.e(TAG, "Unknow host "+getHost());
         }
         return false;
+    }
+    
+    @Override
+    public void finalize(){
+        try {
+            super.finalize();
+            PoMiddlewareService.setOnAppExit();
+            PoConnectionManager.disconnectCalled();
+        } catch (Throwable ex) {
+            Logger.getLogger(PoMainA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

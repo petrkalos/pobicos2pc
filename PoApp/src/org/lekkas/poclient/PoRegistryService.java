@@ -1,27 +1,23 @@
 package org.lekkas.poclient;
 
 import java.nio.ByteBuffer;
-
+import org.kalos.Log;
 
 public class PoRegistryService{
 	private static final String TAG = "PoRegistryService";
 	private static PoRegistryService INSTANCE;
-	private static final byte CLASS_MOBILE = 0x01;
-	private STATE status;
-	private static final int TWO_MINUTES = 1000 * 60 * 2;
+	private STATE state;
 	
 	private int seed;
 	private char myAddr;
-	private double lat;
-	private double lon;
 	
-	public void setStatusState(STATE s) {
-		status = s;
+
+	public STATE getState() {
+		return state;
 	}
-        
-        public STATE getStatusState() {
-                return status;
-        }
+	public void setState(STATE s) {
+		state = s;
+	}
 
 	public static PoRegistryService getInstance() {
                 if(INSTANCE==null) INSTANCE = new PoRegistryService();
@@ -38,9 +34,10 @@ public class PoRegistryService{
 	public void setMyAddr(char b, int s) {
 		myAddr = b;
 		seed = s;
-		status = STATE.REGISTERED;
-		System.out.println(TAG+"myAddr is set to: "+(int)myAddr+" and seed to "+(int)s);
+		state = STATE.REGISTERED;
+		Log.w(TAG,"myAddr is set to: "+(int)myAddr+" and seed to "+(int)s);
 	}
+
         
 	public boolean register() {
 		
@@ -50,62 +47,33 @@ public class PoRegistryService{
 		byte payload_len = (byte)(1 + 8 + 8 + 2 + 4);	// Class of device + Lat + long + addr + seed
 
 		payload = ByteBuffer.allocate(Serialization.uint8ToInt(payload_len));
-		payload.put(CLASS_MOBILE).putDouble(lat).putDouble(lon);
+		payload.put(Network_Msg.CLASS_SERVER).putInt(1234);
 		payload.putChar(myAddr).putInt(seed);
 		payload.position(0);
 		
 
-		msg = new Network_Msg(Network_Msg.REGISTRY_REQ, payload_len, payload.array());
+		msg = new Network_Msg(Network_Msg.SERVER_REGISTRY_REQ, payload_len, payload.array());
 		payload.clear();
 		return PoConnectionManager.getInstance().getOutMsgQ().offer(msg);
 	}
+        
+        public boolean getServer(){
+                Network_Msg msg;
+		ByteBuffer payload;
+		
+		byte payload_len = (byte)(0);
 
-    double getLat() {
-        return lat;
-    }
-
-    double getLon() {
-        return lon;
-    }
+		payload = ByteBuffer.allocate(Serialization.uint8ToInt(payload_len));
+		payload.position(0);
+		
+		msg = new Network_Msg(Network_Msg.SERVER_SEARCH_REQ, payload_len, payload.array());
+		payload.clear();
+		return PoConnectionManager.getInstance().getOutMsgQ().offer(msg);
+        }
 	
 	enum STATE {
 		UNREGISTERED,
 		REGISTERED,
 		REJECTED
 	};
-	
-	
-	public int onStartCommand() {
-		/*System.out.println(TAG+ "onStartCommand()");
-		return START_NOT_STICKY;*/
-                return 0;
-	}
-	
-	
-	public void create() {
-		status = STATE.UNREGISTERED;
-                INSTANCE  = this;
-		lat = 39;
-                lon = 22;
-	}
-
-	
-	public void onBind() {
-		System.out.println(TAG+ "onBind()");
-		
-	}
-
-	
-	public void onDestroy() {
-		System.out.println(TAG+ "onDestroy()");
-		
-	}
-	
-	/* Checks whether two providers are the same */
-	private boolean isSameProvider(String provider1, String provider2) {
-	    if (provider1 == null) {
-	      return provider2 == null;
-	    }
-	    return provider1.equals(provider2);
-	}
 }
