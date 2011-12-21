@@ -1,0 +1,2 @@
+set solib-search-path ./out/apps/middleware/armeabi
+directory ./platforms/android-5/arch-arm/usr/include apps/middleware/PoClient/jni sources/cxx-stl/system
