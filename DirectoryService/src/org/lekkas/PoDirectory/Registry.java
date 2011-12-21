@@ -10,19 +10,27 @@ import java.nio.channels.*;
 public class Registry {
 
     public CopyOnWriteArrayList<NodeInfo> reg;
-    public AtomicInteger addr;
+    public AtomicInteger mob_addr;
+    public AtomicInteger ser_addr;
 
     public Registry() {
         reg = new CopyOnWriteArrayList<NodeInfo>();
-        addr = new AtomicInteger(1);
+        mob_addr = new AtomicInteger(1);
+        ser_addr = new AtomicInteger(5);
     }
 
     /*
      * TODO: Fix this.  
      */
-    public char getAddr() {
-        return (char) addr.getAndAdd(1);
+    public char getMobileAddr() {
+        return (char) mob_addr.getAndAdd(1);
     }
+    
+    public char getServerAddr() {
+        return (char) ser_addr.getAndAdd(1);
+    }
+    
+    
 
     public NodeInfo isRegisted(SocketChannel s) {
         for (NodeInfo n : reg) {

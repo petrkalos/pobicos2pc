@@ -22,8 +22,6 @@ public class RequestHandler implements Runnable {
     private double app_lat = 0.0;
     private double app_lon = 0.0;
 
-    // private char dstAddr;
-    // private char srcAddr;
     enum OP {
 
         SEND_REG_MSG,
@@ -120,105 +118,31 @@ public class RequestHandler implements Runnable {
         }
 
         byte flag = network_msg_header.get(0);
-        
+
         if (flag == Network_Msg.SERVER_SEARCH_REQ) {
             System.out.println("Search Server Request");
             op = OP.SEND_REG_MSG;
             NodeInfo n = Reactor.registry.isRegisted(sock);
-            int i = 0;
-
+            
             if (n != null) {
-                System.out.println("Available servers: "+NodeInfo.getServerCounter());
-                out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN+4);
-                out_msg.put(Network_Msg.SERVER_SEARCH_RES).put((byte)0x4).putInt(1024);
-            } else {
-                //out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN);
-                //out_msg.put(Network_Msg.SERVER_FIND_FAIL);
+                NodeInfo sernode = Reactor.registry.isRegisted(payload.getChar(1));
+                if(sernode !=null && sernode.isServer()){
+                    
+                    String ip = sernode.getServerIP();
+                    int port = sernode.getServerPort();
+                    
+                    out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN + ip.getBytes().length + 4+2);
+                    out_msg.put(Network_Msg.SERVER_SEARCH_RES).put((byte)(ip.getBytes().length + 4+2));
+                    out_msg.put(ip.getBytes()).putInt(port).putChar(sernode.getPoNodeAddr());
+                    System.out.println("PETROS: "+ip.getBytes().length);
+                }
             }
             out_msg.position(0);
             return;
         }
-
-        if (flag == Network_Msg.SERVER_REGISTRY_REQ) {
-            System.out.println("Register Server Request");
-            op = OP.SEND_REG_MSG;
-            NodeInfo n = Reactor.registry.isRegisted(sock);
-
-            if (n == null) { // new incoming connection
-                byte dev_class = payload.get(Network_Msg.CLASS_OFFSET);
-                int server_port = payload.getInt(Network_Msg.PORT_OFFSET);
-                char addr = payload.getChar(Network_Msg.ADDR_OFFSET);
-                node_addr = addr;
-                int seed = payload.getInt(Network_Msg.ADDR_OFFSET+2);
-
-                if (seed == 0 & (int)addr == 0) {	// first time connection
-                    if (v) {
-                        System.err.println(TAG + "Registering new node");
-                    }
-                    n = new NodeInfo(sock,server_port,dev_class);
-                    Reactor.registry.reg.add(n);
-                    /*
-                     * Reg reply
-                     */
-                    out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN + 2 + 4);
-                    out_msg.put(Network_Msg.REG_REPLY_WELCOME).put((byte) 0x06);
-                    out_msg.putChar(n.getPoNodeAddr());
-                    out_msg.putInt(n.getSeed());
-                    out_msg.position(0);
-
-                    return;
-                }
-                if (v) {
-                    System.out.println("Looking for node " + (int) addr + " and seed " + (int) seed);
-                }
-                NodeInfo node = Reactor.registry.isRegistered(addr, seed);
-                if ((node == null)) { // No such node exists 
-					/*
-                     * Reg reply fail
-                     */
-                    out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN);
-                    out_msg.put(Network_Msg.REG_REPLY_FAIL).put((byte) 0x00);
-                    out_msg.position(0);
-                    return;
-                }
-                if ((System.currentTimeMillis() - node.getLastSeen()
-                        > TIME_THRESHOLD_MS)) { // Registration has expired
-					/*
-                     * Reg reply fail
-                     */
-                    out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN);
-                    out_msg.put(Network_Msg.REG_REPLY_FAIL).put((byte) 0x00);
-                    out_msg.position(0);
-                    if (v && Reactor.registry.reg.remove(node.getSocketChannel())) {
-                        System.out.println(TAG + "Node successfully unregisted.");
-                    }
-                    return;
-                } else { // node already registered
-					/*
-                    /*
-                     * Construct PONG message
-                     */
-                    out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN); // no payload
-                    out_msg.put(Network_Msg.REG_REPLY_PONG).put((byte) 0x00);
-                    out_msg.position(0);
-                    node.setLastSeen(System.currentTimeMillis());
-                    return;
-                }
-            } else { // Node already registered and connected
-
-                /*
-                 * Reg reply ready, now construct PONG message
-                 */
-                out_msg = ByteBuffer.allocate(Network_Msg.HEADER_LEN); // no payload
-                out_msg.put(Network_Msg.REG_REPLY_PONG).put((byte) 0x00);
-                out_msg.position(0);
-                n.setLastSeen(System.currentTimeMillis());
-                return;
-            }
-        }
-        
         if (flag == Network_Msg.REGISTRY_REQ) {
             op = OP.SEND_REG_MSG;
+
             NodeInfo n = Reactor.registry.isRegisted(sock);
 
             ByteArrayOutputStream lat = new ByteArrayOutputStream(8);
@@ -249,7 +173,7 @@ public class RequestHandler implements Runnable {
                 node_addr = addr;
                 int seed = Serialization.byteArrayToInt(sd);
                 byte dev_class = payload.get(0);
-                
+
                 if (v) {
                     System.out.println(TAG + ":GOT addr:" + (int) addr + " and seed: " + seed);
                 }
@@ -258,7 +182,11 @@ public class RequestHandler implements Runnable {
                     if (v) {
                         System.err.println(TAG + "Registering new node");
                     }
-                    n = new NodeInfo(sock, latitude, longitude, dev_class);
+                    if (dev_class == Network_Msg.CLASS_MOBILE) {
+                        n = new NodeInfo(sock, latitude, longitude, dev_class);
+                    } else if (dev_class == Network_Msg.CLASS_SERVER) {
+                        n = new NodeInfo(sock, payload.getInt(Network_Msg.PORT_OFFSET), dev_class);
+                    }
                     Reactor.registry.reg.add(n);
                     /*
                      * Reg reply
@@ -329,8 +257,9 @@ public class RequestHandler implements Runnable {
         }
 
         if (flag == Network_Msg.POBICOS_MSG) {
+            System.out.println("PETROS: pobicos message");
             op = OP.SEND_PO_MSG;
-
+            
             out_msg = ByteBuffer.allocate(network_msg_header.capacity() + payload.capacity());
             out_msg.put(network_msg_header.array()).put(payload.array());
             out_msg.position(0);
@@ -381,19 +310,20 @@ public class RequestHandler implements Runnable {
         if (op == OP.SEND_PO_MSG) {
             char dstId = Serialization.byteArrayToChar(out_msg.array(), 4);
             NodeInfo node = Reactor.registry.isRegisted(dstId);
-            System.out.println(TAG + "Node " + byteArrayToAscii(out_msg.array(), 2, 3) + " is looking for node with id: " + byteArrayToAscii(out_msg.array(), 4, 5));
+            System.out.println(TAG + "Node " + byteArrayToAscii(out_msg.array(), 2, 3) 
+                    + " is looking for node with id: " + byteArrayToAscii(out_msg.array(), 4, 5));
             if (node != null) {
                 char rad = out_msg.getChar(out_msg.capacity() - 18);
                 double lat = out_msg.getDouble(out_msg.capacity() - 16);
                 double lon = out_msg.getDouble(out_msg.capacity() - 8);
 
                 if (appLocationSpecsSetUp() && (rad != 0 && lat != 0.0 && lon != 0.0)) {
-                    if (distCheck(node.getLatitude(), node.getLongitude(), app_lat, app_lon, app_radiuskm)) {
+                    if (distCheck(node.getLatitude(), node.getLongitude(), app_lat, app_lon, app_radiuskm) || node.isServer()) {
                         System.out.println(TAG + "FOUND NODE WITHIN LOCATION SPECIFICATIONS");
                         node.getSocketChannel().write(out_msg);
                     }
                 } else {
-                    System.out.println(TAG + "FOUND NODE");
+                    System.out.println(TAG + "FOUND NODE ");
                     node.getSocketChannel().write(out_msg);
                 }
             }
@@ -406,13 +336,12 @@ public class RequestHandler implements Runnable {
                 }
                 for (NodeInfo n : Reactor.registry.reg) {
                     if (n.getSocketChannel() != sock) {
-
                         char rad = out_msg.getChar(out_msg.capacity() - 18);
                         double lat = out_msg.getDouble(out_msg.capacity() - 16);
                         double lon = out_msg.getDouble(out_msg.capacity() - 8);
-
-                        if (appLocationSpecsSetUp() && (rad != 0 && lat != 0.0 && lon != 0.0)) {
-                            if (distCheck(n.getLatitude(), n.getLongitude(), app_lat, app_lon, app_radiuskm)) {
+                        
+                        if (appLocationSpecsSetUp() && (rad != 0 && lat != 0.0 && lon != 0.0) || n.isServer()) {
+                            if (distCheck(n.getLatitude(), n.getLongitude(), app_lat, app_lon, app_radiuskm) || n.isServer()) {
                                 System.out.println(TAG + "FOUND NODE WITHIN LOCATION SPECIFICATIONS");
                                 try {
                                     n.getSocketChannel().write(out_msg);
@@ -489,5 +418,9 @@ public class RequestHandler implements Runnable {
 
     private boolean appLocationSpecsSetUp() {
         return (app_lat != 0.0 && app_lon != 0.0 && app_radiuskm != 0);
+    }
+    
+    private boolean isServer(int addr) {
+        return addr >= 5 && addr != (char) 0xffff;
     }
 }

@@ -22,7 +22,7 @@ public class Network_Msg {
     public static final int LON_OFFSET = 1 + 8;
     public static final int ADDR_OFFSET = 17;	// 1 + 8 + 8 bytes to addr
     public static final int CLASS_OFFSET = 0;
-    public static final int PORT_OFFSET = 1;
+    public static final int PORT_OFFSET = 23;
     public static final byte CLASS_MOBILE = 0x01;
     public static final byte CLASS_SERVER = 0x02;
     public byte[] payload;

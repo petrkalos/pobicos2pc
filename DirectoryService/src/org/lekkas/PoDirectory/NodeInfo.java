@@ -20,11 +20,10 @@ public class NodeInfo {
     private SocketChannel Sock;
     private long last_seen;
     private byte dev_class;
-    private static short server_count;
 
     public NodeInfo(SocketChannel s) {
         Sock = s;
-        PoNodeAddr = Reactor.registry.getAddr();
+        PoNodeAddr = Reactor.registry.getMobileAddr();
         last_seen = System.currentTimeMillis();
         Random r = new Random(System.currentTimeMillis());
         seed = r.nextInt();
@@ -34,18 +33,14 @@ public class NodeInfo {
     public NodeInfo(SocketChannel s, double lat, double lon, byte dev_class) {
         Sock = s;
         last_seen = System.currentTimeMillis();
-        PoNodeAddr = Reactor.registry.getAddr();
+        PoNodeAddr = Reactor.registry.getMobileAddr();
         Random r = new Random(System.currentTimeMillis());
         seed = r.nextInt();
-        if (dev_class == Network_Msg.CLASS_MOBILE) {
-            System.out.println("Created mobile node with addr: " + (int) PoNodeAddr
-                    + ", seed: " + (int) seed + " lat: " + lat
-                    + ", lon: " + lon);
-        } else if (dev_class == Network_Msg.CLASS_SERVER) {
-            System.out.println("Created server node with addr: " + (int) PoNodeAddr
-                    + ", seed: " + (int) seed);
-            server_count++;
-        }
+
+        System.out.println("Created mobile node with addr: " + (int) PoNodeAddr
+                + ", seed: " + (int) seed + " lat: " + lat
+                + ", lon: " + lon);
+
         this.dev_class = dev_class;
         Latitude = lat;
         Longitude = lon;
@@ -54,23 +49,20 @@ public class NodeInfo {
     public NodeInfo(SocketChannel s, int server_port, byte dev_class) {
         this.Sock = s;
         this.last_seen = System.currentTimeMillis();
-        PoNodeAddr = Reactor.registry.getAddr();
+        PoNodeAddr = Reactor.registry.getServerAddr();
         Random r = new Random(System.currentTimeMillis());
         this.seed = r.nextInt();
         this.dev_class = dev_class;
         try {
-            this.server_ip = s.getRemoteAddress().toString();
+            this.server_ip = getIP(s.getRemoteAddress().toString());
         } catch (IOException ex) {
             Logger.getLogger(NodeInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.server_port = server_port;
 
-        System.out.println("Created server node with addr: " + (int) PoNodeAddr
+        System.out.println("Created server node with addr: " + (short) PoNodeAddr
                 + ", seed: " + (int) seed);
         System.out.println("Port: " + server_port + ", IP: " + server_ip);
-        server_count++;
-
-
 
         this.Latitude = -1;
         this.Longitude = -1;
@@ -82,10 +74,6 @@ public class NodeInfo {
 
     public int getServerPort() {
         return this.server_port;
-    }
-
-    public static short getServerCounter() {
-        return server_count;
     }
 
     public void setSock(SocketChannel s) {
@@ -133,6 +121,13 @@ public class NodeInfo {
     }
 
     public boolean isServer() {
+        if(this.dev_class == Network_Msg.CLASS_SERVER) System.out.println("Is server");
+        else System.out.println("No server");
         return this.dev_class == Network_Msg.CLASS_SERVER;
+    }
+    
+    private String getIP(String str){
+        String[] ip = str.split(":");
+        return ip[0].substring(1);
     }
 }
