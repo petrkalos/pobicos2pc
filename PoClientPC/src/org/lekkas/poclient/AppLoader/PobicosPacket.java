@@ -5,18 +5,18 @@ class PobicosPacket {
 	private byte buffer[];
 	
 	public PobicosPacket() {
-		//System.out.println("PobicosPacket()");
+		
 		counter = 0;
 		buffer = new byte[PoUART.MAX_MESSAGE_LEN];		
 	}
 	public PobicosPacket(int channel) {
-		//System.out.println("PobicosPacket(channel)");
+		
 		counter = 0;
 		buffer = new byte[PoUART.MAX_MESSAGE_LEN];
 		buffer[0] = (byte) channel;
 	}
 	public PobicosPacket(byte[] packet) {
-		//System.out.println("PobicosPacket(packet)");
+		
 		buffer = new byte[PoUART.MAX_MESSAGE_LEN];
 		for (int i = 0; i < packet.length; i++) {
 			buffer[i] = packet[i];

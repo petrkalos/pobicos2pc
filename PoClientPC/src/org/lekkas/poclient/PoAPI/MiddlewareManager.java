@@ -72,7 +72,7 @@ public final class MiddlewareManager implements MiddlewareManagerI {
             Log.w(TAG, "uart ok");
         }
         if (this.getClass().getClassLoader() == ng.getClass().getClassLoader()) {
-            System.out.println(TAG + "ng ok");
+            Log.d(TAG, "ng ok");
         }
 
         EventQueue = PoAPI.getEventQueue();

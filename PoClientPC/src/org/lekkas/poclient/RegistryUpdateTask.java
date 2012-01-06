@@ -1,6 +1,7 @@
 package org.lekkas.poclient;
 
 import java.nio.ByteBuffer;
+import org.kalos.Log;
 
 public class RegistryUpdateTask extends Thread implements Runnable {
 
@@ -19,18 +20,18 @@ public class RegistryUpdateTask extends Thread implements Runnable {
     }
 
     public void run() {
-        System.out.println(TAG + "Update thread started");
+        Log.d(TAG,"Update thread started");
         Running = true;
         while (!Thread.currentThread().isInterrupted() && Running) {
             try {
                 Thread.sleep(DELAY);
                 update();
             } catch (InterruptedException e) {
-                System.out.println(TAG + "Registry update thread caught exception: " + e.toString());
+                Log.d(TAG,"Registry update thread caught exception: " + e.toString());
                 Running = false;
             }
         }
-        System.out.println(TAG + "Update thread stopping...");
+        Log.d(TAG,"Update thread stopping...");
     }
 
     public boolean isRunning() {
@@ -38,7 +39,7 @@ public class RegistryUpdateTask extends Thread implements Runnable {
     }
 
     public boolean update() {
-        System.out.println(TAG + "Updating registry.");
+        Log.d(TAG,"Updating registry.");
         Network_Msg msg;
         ByteBuffer payload;
 
@@ -47,8 +48,8 @@ public class RegistryUpdateTask extends Thread implements Runnable {
 
         byte payload_len = (byte) (1 + 8 + 8 + 2 + 4 + 4);	// Class of device + Lat + long + addr + seed
 
-        System.out.println(TAG + "Current latitude: " + lat);
-        System.out.println(TAG + "Current longitude: " + lon);
+        Log.d(TAG,"Current latitude: " + lat);
+        Log.d(TAG,"Current longitude: " + lon);
 
         payload = ByteBuffer.allocate(Serialization.uint8ToInt(payload_len));
         payload.put(Network_Msg.CLASS_MOBILE).putDouble(lat).putDouble(lon);

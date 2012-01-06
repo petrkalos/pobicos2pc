@@ -1,6 +1,7 @@
 package org.lekkas.poclient;
 
 import java.nio.ByteBuffer;
+import org.kalos.Log;
 
 public class PoRegistryService {
 
@@ -40,7 +41,7 @@ public class PoRegistryService {
         myAddr = b;
         seed = s;
         status = STATE.REGISTERED;
-        System.out.println(TAG + "myAddr is set to: " + (int) myAddr + " and seed to " + (int) s);
+        Log.d(TAG,"myAddr is set to: " + (int) myAddr + " and seed to " + (int) s);
     }
 
     public boolean register() {
@@ -77,7 +78,7 @@ public class PoRegistryService {
     };
 
     public int onStartCommand() {
-        /*System.out.println(TAG+ "onStartCommand()");
+        /*Log.d(TAG, "onStartCommand()");
         return START_NOT_STICKY;*/
         return 0;
     }

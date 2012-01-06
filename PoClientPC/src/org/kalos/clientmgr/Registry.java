@@ -6,12 +6,14 @@ package org.kalos.clientmgr;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.nio.channels.*;
+import org.kalos.Log;
 
 public class Registry {
 
     public CopyOnWriteArrayList<NodeInfo> reg;
     public AtomicInteger mob_addr;
     public AtomicInteger ser_addr;
+    private String TAG = "Registry";
 
     public Registry() {
         reg = new CopyOnWriteArrayList<NodeInfo>();
@@ -41,10 +43,10 @@ public class Registry {
 
     public NodeInfo isRegisted(char addr, boolean loop) {
         do {
-            System.out.println("PETROS: Search for addr");
+            Log.d(TAG,"Search for addr");
             for (NodeInfo n : reg) {
                 if ((int) n.getPoNodeAddr() == (int) addr) {
-                    System.out.println("PETROS: node found");
+                    Log.d(TAG,"node found");
                     return n;
                 }
             }

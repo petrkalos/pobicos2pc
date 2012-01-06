@@ -100,22 +100,22 @@ public class PoCommMgrWriteTask extends Thread implements Runnable {
                 if (msg.msg_type == Network_Msg.POBICOS_MSG) {
                     char destaddr = buf.getChar(4);
                     if (destaddr == (char) 0xffff) {
-                        System.out.println("PETROS: broadcast message");
+                        Log.d(TAG,"broadcast message");
                         while (buf.hasRemaining()) {
                             sockch.write(buf);
                         }
                     } else if (isServer(destaddr)) {
-                        Log.w(TAG, "PETROS send message to server client" + (int) destaddr);
+                        Log.w(TAG, "send message to server client" + (int) destaddr);
                         SocketChannel servsock = ServerManager.getInstance().getServerSocket(destaddr);
                         while (buf.hasRemaining()) {
                             servsock.write(buf);
                         }
-                        Log.w(TAG, "PETROS packet: " + byteArrayToAscii(buf.array()));
+                        Log.w(TAG, "packet: " + byteArrayToAscii(buf.array()));
                     } else {
                         SocketChannel client_sockch = Reactor.registry.isRegisted(destaddr,true).getSocketChannel();
-                        Log.w(TAG, "PETROS send message to mobile client");
+                        Log.w(TAG, "send message to mobile client");
                         if (client_sockch != null) {
-                            System.out.println("PETROS: unicast message");
+                            Log.d(TAG,"unicast message");
                             while (buf.hasRemaining()) {
                                 client_sockch.write(buf);
                             }
@@ -124,7 +124,7 @@ public class PoCommMgrWriteTask extends Thread implements Runnable {
 
                     }
                 } else {
-                    System.out.println("PETROS: send message through directory");
+                    Log.d(TAG,"send message through directory");
                     while (buf.hasRemaining()) {
                         sockch.write(buf);
                     }
@@ -205,7 +205,7 @@ public class PoCommMgrWriteTask extends Thread implements Runnable {
     }
 
     private boolean isServer(int dstAddr) {
-        Log.w(TAG, "PETROS: dst addr is " + dstAddr);
+        Log.w(TAG, ": dst addr is " + dstAddr);
         return dstAddr >= 5 && dstAddr != (char) 0xffff;
     }
 }

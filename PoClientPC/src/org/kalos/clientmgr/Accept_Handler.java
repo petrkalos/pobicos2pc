@@ -7,6 +7,7 @@ package org.kalos.clientmgr;
 
 import java.nio.channels.*;
 import java.io.*;
+import org.kalos.Log;
 import org.lekkas.poclient.PoMainA;
 
 public class Accept_Handler implements Runnable{
@@ -29,18 +30,18 @@ public class Accept_Handler implements Runnable{
 				return;
 		
 			sock.configureBlocking(false); // false for Non-Blocking
-			if(v) System.out.println(TAG+"Accepted, now creating handler." +
+			if(v) Log.d(TAG,"Accepted, now creating handler." +
 					"(is sock null?: "+(sock == null)+")");
 			SelectionKey sk = sock.register(selector,  SelectionKey.OP_READ);
 			sk.attach(new RequestHandler(sock));
-			if(v) System.out.println(TAG+"Registered handler");
+			if(v) Log.d(TAG,"Registered handler");
 			//selector.wakeup();
 			
 		} catch (IOException e) {
-			System.out.println("Error accepting: "+e.toString());
+			Log.d(TAG,"Error accepting: "+e.toString());
 		} catch (Exception e) {
-			System.out.println("Exception thrown from run() of AcceptHandler: "+e.getMessage());
-			System.out.println("AcceptHandler: is sock null?"+(sock == null));
+			Log.d(TAG,"Exception thrown from run() of AcceptHandler: "+e.getMessage());
+			Log.d(TAG,"AcceptHandler: is sock null?"+(sock == null));
 		}
 	}
 }

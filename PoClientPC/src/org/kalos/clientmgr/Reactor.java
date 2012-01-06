@@ -9,6 +9,7 @@ import java.nio.channels.*;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import org.kalos.Log;
 
 public class Reactor implements Runnable{
 	private static final int NTHREADS = 1;
@@ -32,7 +33,7 @@ public class Reactor implements Runnable{
 		serverSock.configureBlocking(false);	// false for Non-Blocking
 		SelectionKey sk = serverSock.register(selector,  SelectionKey.OP_ACCEPT);
 		sk.attach(new Accept_Handler(serverSock, selector));
-		System.out.println(TAG+"Server started on port "+port+". Accept()'ing..");
+		Log.d(TAG,"Server started on port "+port+". Accept()'ing..");
 	}
 	
 	public void run() {
@@ -46,7 +47,7 @@ public class Reactor implements Runnable{
 					}
 				}
 			} catch (IOException e) {
-				System.out.println("Error: "+e.toString());
+				Log.d(TAG,"Error: "+e.toString());
 				exec.shutdown();
 			}
 	}

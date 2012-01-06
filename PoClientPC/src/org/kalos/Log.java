@@ -11,7 +11,7 @@ package org.kalos;
 public class Log {
 
     public static void w(String TAG, String string) {
-        System.out.println(TAG+" : "+string);
+        Log.d(TAG," : "+string);
     }
 
     public static void e(String TAG, String string) {
@@ -19,7 +19,7 @@ public class Log {
     }
 
     public static void d(String TAG,String string) {
-        System.out.println(TAG+" : "+string);
+        Log.d(TAG," : "+string);
     }
     
 }

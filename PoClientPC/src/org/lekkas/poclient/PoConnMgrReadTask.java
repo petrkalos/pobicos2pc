@@ -64,6 +64,10 @@ public class PoConnMgrReadTask extends Thread implements Runnable {
                  * 2) For registration messages:
                  *  a)2 bytes, (Registered node address) + 4 bytes(seed) for welcome messages
                  *  b)no payload for pong messages
+                 * 
+                 * 3) For find server response message:
+                 * a)len - 4 -2 bytes ( Server IP ) + 4 bytes for port + 2 bytes for po addr
+                 * 
                  */
                 Log.w(TAG, "TEST: Read()'ing");
                 /*
@@ -81,7 +85,7 @@ public class PoConnMgrReadTask extends Thread implements Runnable {
                     it.remove();
                     sockch = (SocketChannel) selKey.channel();
 
-                    Log.w(TAG, "TEST: PETROS read from: " + sockch.socket().getRemoteSocketAddress());
+                    Log.w(TAG, "TEST:  read from: " + sockch.socket().getRemoteSocketAddress());
 
                     ret = sockch.read(network_msg_header);
                     if (ret == -1) {
@@ -126,11 +130,11 @@ public class PoConnMgrReadTask extends Thread implements Runnable {
                     byte flag = network_msg_header.get(0);
 
                     if (flag == Network_Msg.SERVER_SEARCH_RES) {
-                        Log.w(TAG, "PETROS: Server Search Response");
+                        Log.w(TAG, ": Server Search Response");
                         String ip = new String(payload.array(), 0, len - 4 - 2);
                         int port = payload.getInt(len - 4 - 2);
                         char poaddr = payload.getChar(len - 2);
-                        Log.w(TAG, "PETROS: server ip for " + (int) poaddr
+                        Log.w(TAG, ": server ip for " + (int) poaddr
                                 + " is " + ip + ":" + port);
                         NodeInfo node = new NodeInfo(poaddr, ip, port);
                         ServerManager.getInstance().add(node);
@@ -173,10 +177,10 @@ public class PoConnMgrReadTask extends Thread implements Runnable {
                         if (isServer(srcaddr)) {
                             if (ServerManager.getInstance().existServer(srcaddr)) {
                                 Log.w(TAG,
-                                        "PETROS server connection already open "
+                                        " server connection already open "
                                         + (int) srcaddr);
                             } else {
-                                Log.w(TAG, "PETROS open connection with "
+                                Log.w(TAG, " open connection with "
                                         + (int) srcaddr);
                                 ServerManager.getInstance().searchServer(
                                         srcaddr);
@@ -184,7 +188,7 @@ public class PoConnMgrReadTask extends Thread implements Runnable {
                         } else if(dstaddr != (char) 0xffff){
                             NodeInfo n = Reactor.registry.isRegisted(srcaddr,false);
                             if (n == null) {
-                                Log.w(TAG, "PETROS: Add new node");
+                                Log.w(TAG, ": Add new node");
                                 char addr = payload.getChar(0);
                                 n = new NodeInfo(sockch, addr);
                                 Reactor.registry.reg.add(n);

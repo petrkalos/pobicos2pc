@@ -51,7 +51,7 @@ public class PoMainA{
     
     public static void startApp(){
         if(PoApp.isAppPill()){
-            System.out.println("PETROS: Start application");
+            Log.d(TAG,"Start application");
             PoAppPillLoader.getInstance().loadAndStartApp(args[0]+"pc3App.hex");
         }
     }

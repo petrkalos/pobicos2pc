@@ -52,7 +52,7 @@ public class RequestHandler implements Runnable {
 
     private void read() throws IOException {
         if (v) {
-            System.out.println(TAG + "Read()");
+            Log.d(TAG, "Read()");
         }
         /*
          * Reading network message header.
@@ -61,7 +61,7 @@ public class RequestHandler implements Runnable {
         int ret = sock.read(network_msg_header);
         if (ret == 0) {
             if (v) {
-                System.out.println(TAG + "Read 0 bytes.");
+                Log.d(TAG, "Read 0 bytes.");
             }
             return;
         }
@@ -103,10 +103,10 @@ public class RequestHandler implements Runnable {
          * We now have header + payload.
          */
         if (v) {
-            System.out.println(TAG + "Got header+payload");
+            Log.d(TAG, "Got header+payload");
         }
         if (v) {
-            System.out.println(TAG + "packet: " + byteArrayToAscii(network_msg_header.array())
+            Log.d(TAG, "packet: " + byteArrayToAscii(network_msg_header.array())
                     + byteArrayToAscii(payload.array()));
         }
     }
@@ -126,7 +126,7 @@ public class RequestHandler implements Runnable {
             NodeInfo n = Reactor.registry.isRegisted(sock);
             if (n == null) {
                 char addr = payload.getChar(0);
-                Log.w(TAG, "PETROS: Add new node "+(int)addr);
+                Log.w(TAG, ": Add new node "+(int)addr);
                 n = new NodeInfo(sock, addr);
                 Reactor.registry.reg.add(n);
             } else {
@@ -141,7 +141,7 @@ public class RequestHandler implements Runnable {
         }
 
         if (op == OP.SEND_PO_MSG) {
-            Log.e(TAG, "TEST PETROS: Write to event queue from "+(int)payload.getChar(0));
+            Log.e(TAG, "TEST : Write to event queue from "+(int)payload.getChar(0));
             PoAPI.getEventQueue().offer(new PoNetworkPacketRx(flag, (byte) network_msg_header.get(1), payload.array()));
         }
     }

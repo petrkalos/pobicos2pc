@@ -1,6 +1,6 @@
 package org.lekkas.poclient.PoAPI;
 
-import org.lekkas.poclient.PoApp;
+import org.kalos.Log;
 
 public class NGResources implements NGResourcesI {
 
@@ -11,7 +11,7 @@ public class NGResources implements NGResourcesI {
     private static final NGResources INSTANCE = new NGResources();
 
     private NGResources() {
-        System.out.println(TAG + "Started!");
+        Log.d(TAG,"Started!");
     }
 
     public static NGResources getInstance() {

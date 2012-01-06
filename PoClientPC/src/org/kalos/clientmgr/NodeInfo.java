@@ -18,10 +18,11 @@ public final class NodeInfo {
     private char PoNodeAddr;
     private String server_ip;
     private int server_port;
+    private final String TAG = "NodeInfo";
 
     public NodeInfo(SocketChannel s, char addr) throws ClosedChannelException {
         try {
-            System.out.println("Mobile node connected with addr: " + (int) addr+ " ip: "+s.getRemoteAddress());
+            Log.d(TAG,"Mobile node connected with addr: " + (int) addr+ " ip: "+s.getRemoteAddress());
         } catch (IOException ex) {
             Logger.getLogger(NodeInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,9 +50,9 @@ public final class NodeInfo {
                 while (!Sock.finishConnect()) {}
                 
                 if (Sock.isConnected()) {
-                    Log.w("NODE", "PETROS: socket is connected"+ (int)PoNodeAddr);
+                    Log.w("NODE", ": socket is connected"+ (int)PoNodeAddr);
                 } else {
-                    Log.w("NODE", "PETROS: socket is not connected"+(int) PoNodeAddr);
+                    Log.w("NODE", ": socket is not connected"+(int) PoNodeAddr);
                 }
             }
         } catch (IOException e) {

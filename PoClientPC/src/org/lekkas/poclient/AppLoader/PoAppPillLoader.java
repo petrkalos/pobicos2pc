@@ -67,7 +67,6 @@ public class PoAppPillLoader implements PacketListener, PoAppPillLoaderI {
         androidAppBundle = new int[app.size() - 1];
         for (i = 0; i < app.size() - 1; i++) {
             androidAppBundle[i] = Integer.parseInt(app.get(i), 16);
-            //System.out.println(i+"--"+androidAppBundle[i]);
         }
 
         this.loadAndStartApp();

@@ -59,7 +59,6 @@ public class PoUART extends Thread /*implements Runnable*/ {
     }
 
     public void sendPacket(byte channel, byte[] payload) {
-        //System.out.println("PoUART.send()");
         PobicosPacket pkt = new PobicosPacket(channel);
 
         pkt.append(payload);

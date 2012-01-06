@@ -34,7 +34,7 @@ public class ServerManager {
                 }
                 for (NodeInfo node : list) {
                     if ((int) node.getPoNodeAddr() == (int) addr) {
-                        Log.w(TAG, "PETROS socket found with addr " + (int) node.getPoNodeAddr());
+                        Log.w(TAG, " socket found with addr " + (int) node.getPoNodeAddr());
                         return node.getSocketChannel();
                     }
                 }
@@ -42,7 +42,11 @@ public class ServerManager {
             }
         }
     }
-
+    
+    /* 
+     * Search server request to directory service
+     */
+    
     public boolean searchServer(char addr) {
         Log.w(TAG, "Search Server");
         Network_Msg msg;
@@ -67,7 +71,7 @@ public class ServerManager {
                     return;
                 }
             }
-            Log.w(TAG, "PETROS: Server added to the list");
+            Log.w(TAG, ": Server added to the list");
             list.add(node);
         }
     }
