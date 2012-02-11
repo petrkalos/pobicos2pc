@@ -126,6 +126,13 @@ public class RequestHandler implements Runnable {
             NodeInfo n = Reactor.registry.isRegisted(sock);
             if (n == null) {
                 char addr = payload.getChar(0);
+                
+                int msg_len = payload.get(4);
+                double lat = payload.getDouble(msg_len+7);
+                double lon = payload.getDouble(msg_len+7+8);
+                
+                System.out.println("PETROS lat "+lat+"lan "+lon);
+                
                 Log.w(TAG, ": Add new node "+(int)addr);
                 n = new NodeInfo(sock, addr);
                 Reactor.registry.reg.add(n);

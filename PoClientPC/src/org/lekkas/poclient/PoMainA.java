@@ -18,7 +18,7 @@ public class PoMainA{
 
     private static final String TAG = "PoMainA";
     private static String[] args;
-    private static String directory_ip = "192.168.178.25";
+    private static String directory_ip = "192.168.178.29";
     private static int server_port;
 
     public static void main(String args[]) {
