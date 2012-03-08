@@ -27,7 +27,6 @@ public class NodeInfo {
         last_seen = System.currentTimeMillis();
         Random r = new Random(System.currentTimeMillis());
         seed = r.nextInt();
-        System.out.println("Created node with addr: " + (int) PoNodeAddr + " and seed: " + (int) seed);
     }
 
     public NodeInfo(SocketChannel s, double lat, double lon, byte dev_class) {
