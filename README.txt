@@ -11,3 +11,5 @@ middleware/ : the middleware which is produced from POBICOS toolchain
 PoClient/ : Eclipse Project for the Android POBICOS Client
 
 PoClientPC/ : NetBeans Project for the PC/Server POBICOS
+
+WebUIPoClientPc : Vaadin WebUi with PC/Server POBICOS
